@@ -135,7 +135,6 @@ project_name
 |      └── theme-toggle.js
 └── templates
 |   └── components
-|   |   └── mobile-nav.html
 |   |   └── navbar.html
 |   └── _base.html
 |   └── index.html
