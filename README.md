@@ -121,56 +121,29 @@ The newly created project should look similar to the following:
 
 ```bash
 project_name
-└── config
-|   └── __init__.py
-|   └── asgi.py
-|   └── settings.py
-|   └── urls.py
-|   └── wsgi.py
-└── core
-|   └── migrations
-|   |   └── ...
-|   └── static
-|   |   └── imgs
-|   |   |   └── avatar.svg
-|   |   └── css
-|   |   |   └── input.css
-|   |   |   └── output.css
-|   |   └── js
-|   |   |   └── alpine.min.js
-|   |   |   └── flowbite.min.js
-|   |   |   └── htmx.min.js
-|   |   |   └── theme-toggle.js
-|   └── templates
-|   |   └── core
-|   |   |   └── components
-|   |   |   |   └── mobile-nav.html
-|   |   |   |   └── navbar.html
-|   |   |   └── _base.html
-|   |   |   └── index.html
-|   └── __init__.py
-|   └── admin.py
-|   └── apps.py
-|   └── models.py
-|   └── tests.py
-|   └── urls.py
-|   └── views.py
-└── node_modules
-|   └── ...
+└── assets
+|   └── imgs
+|   |   └── avatar.svg
+|   └── css
+|      └── flowbite.min.css
+|      └── input.css
+|      └── output.css
+|   └── js
+|      └── alpine.min.js
+|      └── flowbite.min.js
+|      └── htmx.min.js
+|      └── theme-toggle.js
+└── templates
+|   └── components
+|   |   └── mobile-nav.html
+|   |   └── navbar.html
+|   └── _base.html
+|   └── index.html
 └── venv
 |   └── ...
 └── .env
 └── .gitignore
-└── db.sqlite3
-└── manage.py
-└── package.json
-└── package-lock.json
 └── requirements.txt
 └── tailwind.config.js
+└── tailwindcss.exe
 ```
-
-## Noteworthy Files and Folders
-
-- `config/` - core settings created by using `django-admin startproject`
-- `core/` - a standard app created using `python manage.py startapp` that stores the primary static files and templates for the project
-- `core/templates/core/index.html` - application homepage
