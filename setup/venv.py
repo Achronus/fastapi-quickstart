@@ -12,6 +12,7 @@ console = Console()
 
 
 class VEnv:
+    """A controller for creating a Python virtual environment."""
     @staticmethod
     def create() -> None:
         """Creates a new virtual environment."""
@@ -35,6 +36,7 @@ class VEnv:
 
     @classmethod
     def run(cls, progress: Progress) -> None:
+        """Runs controller sub-tasks."""
         sub_tasks = [
             (cls.create, "  Building venv..."),
             (cls.update_pip, "  Updating PIP..."),
