@@ -45,7 +45,7 @@ Fortunately, `Tailwind` has a [Standalone CLI](https://tailwindcss.com/blog/stan
 
 ### Customisation and Configuration
 
-By default, you can add whatever files you want to the tool as long as they are stored in the `setup_assets` folder. Feel free to explore the default one that comes pre-configured with the tool. For context, here a few things to note:
+By default, you can add whatever files you want to the tool as long as they are stored in the `setup_assets` folder. Feel free to explore the default one that comes pre-configured with the tool. Here a few things to note:
 - All the files are added to the `project` root directory
 - Static files **MUST** be stored in a `setup_assets/static` folder
 - The static folder name is changed dynamically based on the `config.py` `STATIC_FILES_DIR` variable
