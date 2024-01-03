@@ -1,26 +1,48 @@
+import os
+import subprocess
+
+from conf.constants import VENV, PASS, CORE_PIP_PACKAGES
+from config import ADDITIONAL_PIP_PACKAGES
+
+from rich.console import Console
+from rich.progress import Progress
 
 
-
-
-def create_venv() -> None:
-    """Virtual environment controller."""
-    venv = VEnv()
-    
+console = Console()
 
 
 class VEnv:
-    def create(self) -> None:
+    @staticmethod
+    def create() -> None:
         """Creates a new virtual environment."""
-        pass
+        subprocess.run(["python", "-m", "venv", "venv"])
 
-    def update_pip(self) -> None:
+    @staticmethod
+    def update_pip() -> None:
         """Updates `PIP` to the latest version."""
-        pass
+        subprocess.run([os.path.join(VENV, "pip"), "install", "--upgrade", "pip"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    def install(self) -> None:
+    @staticmethod
+    def install() -> None:
         """Installs a set of `PIP` packages."""
-        pass
+        subprocess.run([os.path.join(VENV, "pip"), "install", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    def requirements(self) -> None:
+    @staticmethod
+    def requirements() -> None:
         """Creates a `requirements.txt` file."""
-        pass
+        with open("requirements.txt", "w") as file:
+            subprocess.Popen([os.path.join(VENV, "pip"), "freeze"], stdout=file)
+
+    @classmethod
+    def run(cls, progress: Progress) -> None:
+        sub_tasks = [
+            (cls.create, "  Building venv..."),
+            (cls.update_pip, "  Updating PIP..."),
+            (cls.install, "  Installing PIP packages..."),
+            (cls.requirements, "  Creating [magenta]requirements.txt[/magenta]...")
+        ]
+
+        for task, desc in sub_tasks:
+            task_id = progress.add_task(description=desc, total=None)
+            task()
+            progress.update(task_id, completed=1, description=f"{desc} {PASS}")
