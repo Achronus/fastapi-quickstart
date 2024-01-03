@@ -3,6 +3,7 @@ import subprocess
 
 from conf.constants import VENV, PASS, CORE_PIP_PACKAGES
 from config import ADDITIONAL_PIP_PACKAGES
+from utils.helper import task_desc_formatter
 
 from rich.console import Console
 from rich.progress import Progress
@@ -38,10 +39,10 @@ class VEnv:
     def run(cls, progress: Progress) -> None:
         """Runs controller sub-tasks."""
         sub_tasks = [
-            (cls.create, "  Building venv..."),
-            (cls.update_pip, "  Updating PIP..."),
-            (cls.install, "  Installing PIP packages..."),
-            (cls.requirements, "  Creating [magenta]requirements.txt[/magenta]...")
+            (cls.create, task_desc_formatter("Building venv")),
+            (cls.update_pip, task_desc_formatter("Updating PIP")),
+            (cls.install, task_desc_formatter("Installing PIP packages")),
+            (cls.requirements, task_desc_formatter("Creating [magenta]requirements.txt[/magenta]"))
         ]
 
         for task, desc in sub_tasks:

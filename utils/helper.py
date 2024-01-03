@@ -13,3 +13,8 @@ def strip_whitespace_and_dashes(name: str) -> str:
         name = '_'.join(name_split)
     
     return name.strip()
+
+
+def task_desc_formatter(desc: str) -> str:
+    """Adds custom formatting to a task description."""
+    return f"   {desc}..."
