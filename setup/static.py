@@ -16,12 +16,14 @@ class StaticAssets:
     """A controller for creating handling the static assets."""
     @staticmethod
     def create_dotenv() -> None:
+        """Creates a `.env` file and adds items to it."""
         with open(".env", "a") as file:
             for item in ENV_FILE_ADDITIONAL_PARAMS:
                 file.write(item)
 
     @staticmethod
     def move_setup_assets() -> None:
+        """Moves the items in the `setup_assets` folder into the project directory."""
         static_exists = False
         correct_static_path = os.path.join(os.getcwd(), STATIC_DIR_NAME)
 
