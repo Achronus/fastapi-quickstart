@@ -1,3 +1,4 @@
+import os
 
 
 def strip_whitespace_and_dashes(name: str) -> str:
@@ -18,3 +19,14 @@ def strip_whitespace_and_dashes(name: str) -> str:
 def task_desc_formatter(desc: str) -> str:
     """Adds custom formatting to a task description."""
     return f"   {desc}..."
+
+
+def tw_executable_exists(project_path: str) -> bool:
+    """Checks if the `tailwindcss` executable exists in the project root directory."""
+    windows_tw = os.path.join(project_path, 'tailwindcss.exe')
+    other_tw = os.path.join(project_path, 'tailwindcss')
+
+    # If executable exists, return True
+    if os.path.exists(other_tw) or os.path.exists(windows_tw):
+        return True
+    return False
