@@ -38,16 +38,12 @@ STATIC_DIR_NAME = static_dir_check(STATIC_FILES_DIR)
 # Setup assets directory names
 class SetupAssetsDirNames:
     ROOT = 'setup_assets'
-    CORE = 'core'
-    PROJECT = 'project'
 
 
 # Setup assets filepaths
 class SetupDirPaths:
     ROOT = os.path.dirname(os.path.join(os.getcwd(), SetupAssetsDirNames.ROOT))
     ASSETS = os.path.join(ROOT, SetupAssetsDirNames.ROOT)
-    CORE = os.path.join(ASSETS, SetupAssetsDirNames.CORE)
-    PROJECT = os.path.join(ASSETS, SetupAssetsDirNames.PROJECT)
 
 
 # Asset filenames
