@@ -1,10 +1,9 @@
 import os
 import shutil
 
-from conf.constants import PARTY
 from setup import run_tasks
 from utils.helper import strip_whitespace_and_dashes
-from utils.printables import project_table
+from utils.printables import project_table, project_complete_panel
 
 import typer
 from typing_extensions import Annotated
@@ -43,8 +42,8 @@ def main(name: Annotated[str, typer.Argument(help="The name of the project", sho
     # Run task handler
     run_tasks()
 
-    # End of scriptparty
-    console.print(f"\n{PARTY} Project created successfully! {PARTY}")
+    # End of script
+    console.print(project_complete_panel())
     console.print(f"Access {name_print} at {path_print}")
 
 if __name__ == '__main__':

@@ -1,8 +1,9 @@
 import os
 
-from conf.constants import PASS, FAIL
+from conf.constants import PASS, FAIL, PARTY
 
 from rich.table import Table
+from rich.panel import Panel
 
 
 def project_table(name: str, path: str) -> Table:
@@ -14,3 +15,9 @@ def project_table(name: str, path: str) -> Table:
     table.add_column("Exists", style=colour, justify="center")
     table.add_row(name, icon)
     return table
+
+
+def project_complete_panel() -> Panel:
+    """Creates a printable project complete panel."""
+    panel = Panel.fit(f"\n{PARTY} Project created successfully! {PARTY}", height=5, border_style="green")
+    return panel
