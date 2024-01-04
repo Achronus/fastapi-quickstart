@@ -5,11 +5,7 @@ from conf.constants import VENV, PASS, CORE_PIP_PACKAGES
 from config import ADDITIONAL_PIP_PACKAGES
 from utils.helper import task_desc_formatter
 
-from rich.console import Console
 from rich.progress import Progress
-
-
-console = Console()
 
 
 class VEnv:

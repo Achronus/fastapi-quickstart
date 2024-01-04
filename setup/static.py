@@ -5,11 +5,7 @@ from conf.constants import PASS, STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, SetupD
 from config import ENV_FILE_ADDITIONAL_PARAMS
 from utils.helper import task_desc_formatter
 
-from rich.console import Console
 from rich.progress import Progress
-
-
-console = Console()
 
 
 class StaticAssets:

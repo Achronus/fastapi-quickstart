@@ -4,10 +4,7 @@ import shutil
 from conf.constants import PASS
 from utils.helper import task_desc_formatter, tw_executable_exists
 
-from rich.console import Console
 from rich.progress import Progress
-
-console = Console()
 
 
 class ProjectCleanup:
