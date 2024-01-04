@@ -1,7 +1,7 @@
 import os
 import sys
 
-from .helper import dirname_check, set_tw_standalone_filename
+from .helper import dirname_check, set_tw_standalone_filename, get_project_name
 from ..config import STATIC_FILES_DIR, VENV_NAME
 
 
@@ -13,17 +13,15 @@ if sys.platform.startswith("win"):
 else:
     VENV = f"source {VENV_LOCATION}/bin/"
 
+# Store project name
+PROJECT_NAME = get_project_name()
+
 # Define core PIP packages
 CORE_PIP_PACKAGES = [
     "fastapi", 
     "uvicorn[standard]", 
     "jinja2", 
-    "python-dotenv"
-]
-
-# Define CLI specific pip packages
-CLI_PIP_PACKAGES = [
-    "typer[all]",
+    "python-dotenv",
     "poetry"
 ]
 
@@ -56,7 +54,8 @@ class SetupAssetsDirNames:
 # Setup assets filepaths
 class SetupDirPaths:
     ROOT = os.path.dirname(os.path.join(os.getcwd(), SetupAssetsDirNames.ROOT))
-    ASSETS = os.path.join(ROOT, 'fastapi_quickstart', SetupAssetsDirNames.ROOT)
+    PROJECT_ROOT = os.path.join(ROOT, 'fastapi_quickstart')
+    ASSETS = os.path.join(PROJECT_ROOT, SetupAssetsDirNames.ROOT)
 
 
 # Asset filenames

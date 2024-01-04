@@ -3,7 +3,7 @@ from .static import StaticAssetsController
 from .libraries import LibraryController
 from .fastapi import FastAPIFileController
 from .clean import CleanupController
-from ..conf.constants import PASS, SetupDirPaths
+from ..conf.constants import PASS
 
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
