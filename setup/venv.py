@@ -9,14 +9,14 @@ from setup.base import ControllerBase
 class VEnvController(ControllerBase):
     """A controller for creating a Python virtual environment."""
     def __init__(self) -> None:
-        sub_tasks = [
+        tasks = [
             (self.create, "Building venv"),
             (self.update_pip, "Updating PIP"),
             (self.install, "Installing PIP packages"),
             (self.requirements, "Creating [magenta]requirements.txt[/magenta]")
         ]
 
-        super().__init__(sub_tasks)
+        super().__init__(tasks)
 
     @staticmethod
     def create() -> None:

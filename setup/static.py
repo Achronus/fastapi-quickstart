@@ -9,12 +9,12 @@ from setup.base import ControllerBase
 class StaticAssetsController(ControllerBase):
     """A controller for handling the static assets."""
     def __init__(self) -> None:
-        sub_tasks = [
+        tasks = [
             (self.create_dotenv, "Building [magenta].env[/magenta]"),
             (self.move_setup_assets, "Creating static files and templates")
         ]
 
-        super().__init__(sub_tasks)
+        super().__init__(tasks)
 
     @staticmethod
     def create_dotenv() -> None:

@@ -8,15 +8,15 @@ from setup.base import ControllerBase
 class CleanupController(ControllerBase):
     """A controller for handling project cleanup."""
     def __init__(self) -> None:
-        sub_tasks = []
+        tasks = []
 
         # If exists, remove node_modules
         if tw_executable_exists(os.getcwd()):
-            sub_tasks.append(
+            tasks.append(
                 (self.node_modules, "Removing [magenta]node_modules[/magenta]")
             )
 
-        super().__init__(sub_tasks)
+        super().__init__(tasks)
     
     @staticmethod
     def node_modules() -> None:
