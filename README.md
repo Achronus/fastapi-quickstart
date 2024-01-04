@@ -24,18 +24,27 @@ Creating a project from scratch can be a tedious process. So, I wanted to simpli
 The tool does the following:
 
 - Creates a virtual environment in the project folder
+<<<<<<< HEAD
 - Accesses it, updates pip and installs the required packages
+=======
+- Accesses it, updates `PIP` and installs the required packages
+>>>>>>> origin/dev
 - Generates a `requirements.txt` file
 - Creates a `.env` file
 - Creates an `api` directory with a basic application template for `FastAPI`
 - Creates a `template` directory with some basic `Jinja2` template files
   - Such as a `_base.html` and `index.html`
+<<<<<<< HEAD
 - Creates an `assets` directory for storing `css`, `js`, and `img` files locally
+=======
+- Creates a `static` files directory for storing `css`, `js`, and `img` files locally (name can be set in `config.py` as either `static`, `public`, or `assets`)
+>>>>>>> origin/dev
   - Adds `TailwindCSS`, `Flowbite`, `HTMX`, and `AlpineJS` static files
 
 
 ## Dependencies
 
+<<<<<<< HEAD
 For this tool to work, we require [NodeJS](https://nodejs.org/en), `NPM` and [Python](https://www.python.org/downloads/) to be installed on your local machine.
 
 We use `node_modules` to maintain the latest versions of the core stack (`AlpineJS`, `TailwindCSS`, and `Flowbite`), but remove them from the project after use.
@@ -50,6 +59,27 @@ There are a few other configurable options in there too, such as `PIP_PACKAGES` 
 
 ### Creation
 1. To get started, clone the repository, enter the folder and run `setup.py` with a `name` (e.g., `my_project`) argument and apply the `--outside` flag. This creates a new project inside the `parent` directory of the `fastapi-quickstart` directory:
+=======
+The tool is intended to be dynamic and aims to install the most recent packages where possible. To do this, we require [NodeJS](https://nodejs.org/en), `NPM` and [Python](https://www.python.org/downloads/) to be installed on your local machine, with the latest stable versions. 
+
+We use `node_modules` and `PIP` to maintain the latest versions of the core stack, and remove the `node_modules` after creation to simplify the project folder.
+
+Fortunately, `Tailwind` has a [Standalone CLI](https://tailwindcss.com/blog/standalone-cli) that allows us to watch and minify files without needing `NodeJS`!
+
+
+### Customisation and Configuration
+
+By default, you can add whatever files you want to the tool as long as they are stored in the `setup_assets` folder. Feel free to explore the default one that comes pre-configured with the tool. Here a few things to note:
+- All the files are added to the `project` root directory
+- Static files **MUST** be stored in a `setup_assets/static` folder
+- The static folder name is changed dynamically based on the `config.py` `STATIC_FILES_DIR` variable
+
+There are a few other configurable options in `config.py`, such as `PIP_PACKAGES` and additional `.env` parameters that you can setup too.
+
+
+### Creation
+1. To get started, clone the repository, enter the folder and run `setup.py` with a `name` (e.g., `my_project`) argument. This creates a new project inside the `parent` directory of the `fastapi-quickstart` directory:
+>>>>>>> origin/dev
 
 ```bash
 git clone https://github.com/Achronus/fastapi-quickstart.git
@@ -60,11 +90,16 @@ cd fastapi-quickstart
 ```
 
 ```bash
+<<<<<<< HEAD
 python setup.py my_project --outside
+=======
+python setup.py my_project
+>>>>>>> origin/dev
 ```
 
 For example, if you have a parent folder called `projects` and are making a project called `todo_app` the project is created in `projects/todo_app` instead of `projects/fastapi-quickstart/todo_app`.
 
+<<<<<<< HEAD
 Simply remove the flag if you want the project installed in the `fastapi-quickstart` directory.
 
 
@@ -74,6 +109,8 @@ Looking to replace an existing project with the same name? Use the `--force` fla
 ```bash
 python setup.py my_project --outside --force
 ```
+=======
+>>>>>>> origin/dev
 
 ### And That's It!
 Everything is setup with a blank template ready to start building a project from scratch.
@@ -81,6 +118,7 @@ Everything is setup with a blank template ready to start building a project from
 Simply, enter the new project folder:
 
 ```bash
+<<<<<<< HEAD
 # If using the --outside flag
 cd ../my_project
 ```
@@ -90,6 +128,11 @@ cd ../my_project
 cd my_project
 ```
 
+=======
+cd ../my_project
+```
+
+>>>>>>> origin/dev
 Access the virtual environment:
 ```bash
 # Windows
@@ -113,8 +156,11 @@ And watch `TailwindCSS` in another (remember to be in the `my_project` folder!):
 tailwindcss -i assets/css/input.css -o assets/css/output.css --watch --minify
 ```
 
+<<<<<<< HEAD
 _Note: while `Node` and `NPM` are needed for the install, we don't use them in the project itself!_
 
+=======
+>>>>>>> origin/dev
 ## Folder Structure
 
 The newly created project should look similar to the following:
@@ -144,5 +190,9 @@ project_name
 └── .gitignore
 └── requirements.txt
 └── tailwind.config.js
+<<<<<<< HEAD
 └── tailwindcss.exe
+=======
+└── tailwindcss
+>>>>>>> origin/dev
 ```
