@@ -1,6 +1,7 @@
 import os
 import sys
 
+from conf.helper import dirname_check, tw_standalone_filename_setter
 from config import STATIC_FILES_DIR
 
 
@@ -18,6 +19,13 @@ CORE_PIP_PACKAGES = [
     "python-dotenv"
 ]
 
+# Define core NPM packages to install
+NPM_PACKAGES = [
+    "tailwindcss", 
+    "flowbite", 
+    "alpinejs"
+]
+
 # Custom print emoji's
 PASS = '[green]\u2713[/green]'
 FAIL = '[red]\u274c[/red]'
@@ -26,14 +34,11 @@ PARTY = ':party_popper:'
 # Set default static directory name
 VALID_STATIC_DIR_NAMES =  ['static', 'public', 'assets']
 
-def static_dir_check(custom_name: str) -> str:
-    if custom_name not in VALID_STATIC_DIR_NAMES:
-        return ValueError(f"'STATIC_FILES_DIR' in 'config.py' must be one of: '{VALID_STATIC_DIR_NAMES}'!")
-
-    return custom_name
-
-STATIC_DIR_NAME = static_dir_check(STATIC_FILES_DIR)
-
+STATIC_DIR_NAME = dirname_check(
+    VALID_STATIC_DIR_NAMES, 
+    STATIC_FILES_DIR,
+    err_msg_start="'STATIC_FILES_DIR' in 'config.py'"
+)
 
 # Setup assets directory names
 class SetupAssetsDirNames:
@@ -51,6 +56,7 @@ class AssetFilenames:
     _js_ext = '.min.js'
     _css_ext = '.min.css'
 
+    TW_STANDALONE = tw_standalone_filename_setter()
     ALPINE = 'alpine' + _js_ext
     HTMX = 'htmx' + _js_ext
     FLOWBITE_CSS = 'flowbite' + _css_ext
@@ -59,6 +65,7 @@ class AssetFilenames:
 
 # Asset URLs
 class AssetUrls:
+    TW_STANDALONE = 'https://github.com/tailwindlabs/tailwindcss/releases/latest/download/'
     ALPINE = 'node_modules/alpinejs/dist/cdn.min.js'
     HTMX = f'https://unpkg.com/htmx.org/dist/{AssetFilenames.HTMX}'
     FLOWBITE_CSS = f'node_modules/flowbite/dist/{AssetFilenames.FLOWBITE_CSS}'

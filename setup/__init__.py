@@ -12,7 +12,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 TASKS = [
     (VEnvController().run, "Creating virtual environment..."),
     (StaticAssetsController().run, "Creating static assets..."),
-    # (LibraryController().run, "Installing libraries..."),
+    (LibraryController().run, "Installing libraries..."),
     # (FastAPIFileController().run, "Creating FastAPI assets..."),
     (CleanupController().run, "Cleaning project...")
 ]
