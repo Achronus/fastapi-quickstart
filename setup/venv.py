@@ -1,15 +1,23 @@
 import os
 import subprocess
 
-from conf.constants import VENV, PASS, CORE_PIP_PACKAGES
+from conf.constants import VENV, CORE_PIP_PACKAGES
 from config import ADDITIONAL_PIP_PACKAGES
-from utils.helper import task_desc_formatter
-
-from rich.progress import Progress
+from setup.base import ControllerBase
 
 
-class VEnv:
+class VEnvController(ControllerBase):
     """A controller for creating a Python virtual environment."""
+    def __init__(self) -> None:
+        sub_tasks = self.format_tasks([
+            (self.create, "Building venv"),
+            (self.update_pip, "Updating PIP"),
+            (self.install, "Installing PIP packages"),
+            (self.requirements, "Creating [magenta]requirements.txt[/magenta]")
+        ])
+
+        super().__init__(sub_tasks)
+
     @staticmethod
     def create() -> None:
         """Creates a new virtual environment."""
@@ -30,18 +38,3 @@ class VEnv:
         """Creates a `requirements.txt` file."""
         with open("requirements.txt", "w") as file:
             subprocess.Popen([os.path.join(VENV, "pip"), "freeze"], stdout=file)
-
-    @classmethod
-    def run(cls, progress: Progress) -> None:
-        """Runs controller sub-tasks."""
-        sub_tasks = [
-            (cls.create, task_desc_formatter("Building venv")),
-            (cls.update_pip, task_desc_formatter("Updating PIP")),
-            (cls.install, task_desc_formatter("Installing PIP packages")),
-            (cls.requirements, task_desc_formatter("Creating [magenta]requirements.txt[/magenta]"))
-        ]
-
-        for task, desc in sub_tasks:
-            task_id = progress.add_task(description=desc, total=None)
-            task()
-            progress.update(task_id, completed=1, description=f"{desc} {PASS}")

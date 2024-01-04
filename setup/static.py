@@ -1,15 +1,21 @@
 import os
 import shutil
 
-from conf.constants import PASS, STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, SetupDirPaths
+from conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, SetupDirPaths
 from config import ENV_FILE_ADDITIONAL_PARAMS
-from utils.helper import task_desc_formatter
-
-from rich.progress import Progress
+from setup.base import ControllerBase
 
 
-class StaticAssets:
-    """A controller for creating handling the static assets."""
+class StaticAssetsController(ControllerBase):
+    """A controller for handling the static assets."""
+    def __init__(self) -> None:
+        sub_tasks = self.format_tasks([
+            (self.create_dotenv, "Building [magenta].env[/magenta]"),
+            (self.move_setup_assets, "Creating static files and templates")
+        ])
+
+        super().__init__(sub_tasks)
+
     @staticmethod
     def create_dotenv() -> None:
         """Creates a `.env` file and adds items to it."""
@@ -39,16 +45,3 @@ class StaticAssets:
         # If static folder doesn't exist, make one
         if not static_exists:
             os.mkdir(correct_static_path)
-
-    @classmethod
-    def run(cls, progress: Progress) -> None:
-        """Runs controller sub-tasks."""
-        sub_tasks = [
-            (cls.create_dotenv, task_desc_formatter("Building [magenta].env[/magenta]")),
-            (cls.move_setup_assets, task_desc_formatter("Creating static files and templates")),
-        ]
-
-        for task, desc in sub_tasks:
-            task_id = progress.add_task(description=desc, total=None)
-            task()
-            progress.update(task_id, completed=1, description=f"{desc} {PASS}")

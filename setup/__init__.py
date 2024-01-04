@@ -1,8 +1,8 @@
-from .venv import VEnv
-from .static import StaticAssets
-from .libraries import install_libraries
+from .venv import VEnvController
+from .static import StaticAssetsController
+from .libraries import LibraryController
 from .fastapi import create_fastapi_files
-from .clean import ProjectCleanup
+from .clean import CleanupController
 from conf.constants import PASS
 
 import typer
@@ -11,11 +11,11 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 
 TASKS = [
-    (VEnv.run, "Creating virtual environment..."),
-    (StaticAssets.run, "Creating static assets..."),
-    # (install_libraries, "Installing libraries..."),
-    # (create_fastapi_files, "Creating FastAPI assets..."),
-    (ProjectCleanup.run, "Cleaning project...")
+    (VEnvController().run, "Creating virtual environment..."),
+    (StaticAssetsController().run, "Creating static assets..."),
+    # (LibraryController().run, "Installing libraries..."),
+    # (FastAPIFileController().run, "Creating FastAPI assets..."),
+    (CleanupController().run, "Cleaning project...")
 ]
 
 console = Console()

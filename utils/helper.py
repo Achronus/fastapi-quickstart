@@ -16,11 +16,6 @@ def strip_whitespace_and_dashes(name: str) -> str:
     return name.strip()
 
 
-def task_desc_formatter(desc: str) -> str:
-    """Adds custom formatting to a task description."""
-    return f"   {desc}..."
-
-
 def tw_executable_exists(project_path: str) -> bool:
     """Checks if the `tailwindcss` executable exists in the project root directory."""
     windows_tw = os.path.join(project_path, 'tailwindcss.exe')
