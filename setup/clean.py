@@ -16,7 +16,7 @@ class CleanupController(ControllerBase):
                 (self.node_modules, "Removing [magenta]node_modules[/magenta]")
             )
 
-        super().__init__(self.format_tasks(sub_tasks))
+        super().__init__(sub_tasks)
     
     @staticmethod
     def node_modules() -> None:
