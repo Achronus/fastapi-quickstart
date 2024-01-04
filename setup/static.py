@@ -45,3 +45,6 @@ class StaticAssetsController(ControllerBase):
         # If static folder doesn't exist, make one
         if not static_exists:
             os.mkdir(correct_static_path)
+            os.mkdir(os.path.join(correct_static_path, 'css'))
+            os.mkdir(os.path.join(correct_static_path, 'js'))
+            os.mkdir(os.path.join(correct_static_path, 'imgs'))
