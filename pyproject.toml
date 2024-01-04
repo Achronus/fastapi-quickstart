@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "fastapi-quickstart"
+version = "0.8.0"
+description = "A quickstart tool for creating a FastAPI project with Jinja2, TailwindCSS, Flowbite, HTMX, and AlpineJS."
+authors = ["Ryan Partridge <rpartridge101@yahoo.co.uk>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+fastapi-quickstart = "fastapi_quickstart.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = {extras = ["all"], version = "^0.9.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

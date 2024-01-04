@@ -1,11 +1,11 @@
 import os
 import shutil
 
-from conf.constants import STATIC_DIR_NAME
-from conf.helper import set_tw_standalone_filename
-from setup import run_tasks
-from utils.helper import strip_whitespace_and_dashes
-from utils.printables import project_table, project_complete_panel
+from .conf.constants import STATIC_DIR_NAME
+from .conf.helper import set_tw_standalone_filename
+from .setup import run_tasks
+from .utils.helper import strip_whitespace_and_dashes
+from .utils.printables import project_table, project_complete_panel
 
 import typer
 from typing_extensions import Annotated

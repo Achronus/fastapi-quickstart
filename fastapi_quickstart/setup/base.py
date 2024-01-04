@@ -1,4 +1,5 @@
-from conf.constants import PASS
+from ..conf.constants import PASS
+
 from rich.progress import Progress
 
 

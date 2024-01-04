@@ -1,8 +1,8 @@
 import os
 import shutil
 
-from conf.helper import tw_executable_exists
-from setup.base import ControllerBase
+from ..conf.helper import tw_executable_exists
+from .base import ControllerBase
 
 
 class CleanupController(ControllerBase):

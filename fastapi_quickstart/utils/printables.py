@@ -1,6 +1,6 @@
 import os
 
-from conf.constants import PASS, FAIL, PARTY
+from ..conf.constants import PASS, FAIL, PARTY
 
 from rich.table import Table
 from rich.panel import Panel

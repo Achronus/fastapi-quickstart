@@ -1,15 +1,17 @@
 import os
 import sys
 
-from conf.helper import dirname_check, set_tw_standalone_filename
-from config import STATIC_FILES_DIR
+from .helper import dirname_check, set_tw_standalone_filename
+from ..config import STATIC_FILES_DIR, VENV_NAME
 
 
 # Change venv activation depending on OS
+VENV_LOCATION = os.path.join(os.getcwd(), VENV_NAME)
+
 if sys.platform.startswith("win"):
-    VENV = "venv\\Scripts"
+    VENV = f"{VENV_LOCATION}\\Scripts"
 else:
-    VENV = "venv/bin/"
+    VENV = f"source {VENV_LOCATION}/bin/"
 
 # Define core PIP packages
 CORE_PIP_PACKAGES = [
@@ -17,6 +19,12 @@ CORE_PIP_PACKAGES = [
     "uvicorn[standard]", 
     "jinja2", 
     "python-dotenv"
+]
+
+# Define CLI specific pip packages
+CLI_PIP_PACKAGES = [
+    "typer[all]",
+    "poetry"
 ]
 
 # Define core NPM packages to install
@@ -48,7 +56,7 @@ class SetupAssetsDirNames:
 # Setup assets filepaths
 class SetupDirPaths:
     ROOT = os.path.dirname(os.path.join(os.getcwd(), SetupAssetsDirNames.ROOT))
-    ASSETS = os.path.join(ROOT, SetupAssetsDirNames.ROOT)
+    ASSETS = os.path.join(ROOT, 'fastapi_quickstart', SetupAssetsDirNames.ROOT)
 
 
 # Asset filenames

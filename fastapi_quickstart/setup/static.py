@@ -1,9 +1,9 @@
 import os
 import shutil
 
-from conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, SetupDirPaths
-from config import ENV_FILE_ADDITIONAL_PARAMS
-from setup.base import ControllerBase
+from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, SetupDirPaths
+from ..config import ENV_FILE_ADDITIONAL_PARAMS
+from .base import ControllerBase
 
 
 class StaticAssetsController(ControllerBase):

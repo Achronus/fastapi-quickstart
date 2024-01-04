@@ -3,13 +3,13 @@ import shutil
 import subprocess
 import urllib.request
 
-from conf.constants import (
+from ..conf.constants import (
     AssetFilenames, 
     AssetUrls, 
     STATIC_DIR_NAME, 
     NPM_PACKAGES
 )
-from setup.base import ControllerBase
+from .base import ControllerBase
 
 
 class LibraryController(ControllerBase):

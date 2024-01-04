@@ -1,9 +1,9 @@
 import os
 import subprocess
 
-from conf.constants import VENV, CORE_PIP_PACKAGES
-from config import ADDITIONAL_PIP_PACKAGES
-from setup.base import ControllerBase
+from ..conf.constants import VENV, CORE_PIP_PACKAGES
+from ..config import ADDITIONAL_PIP_PACKAGES
+from .base import ControllerBase
 
 
 class VEnvController(ControllerBase):

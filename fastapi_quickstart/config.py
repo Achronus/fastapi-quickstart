@@ -2,6 +2,9 @@
 # Options: ['static', 'public', 'assets']
 STATIC_FILES_DIR = "assets"  
 
+# Configure virtual environment name
+VENV_NAME = 'env'
+
 # Pip packages to install
 ADDITIONAL_PIP_PACKAGES = [
     
