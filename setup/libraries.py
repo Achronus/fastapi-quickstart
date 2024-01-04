@@ -16,11 +16,11 @@ class LibraryController(ControllerBase):
     """A controller for handling CSS and JS libraries."""
     def __init__(self) -> None:
         tasks = [
-            (self.npm_installs, "Installing NPM packages"),
-            (self.get_tw_standalone, "Retrieving Tailwind standalone"),
-            (self.get_flowbite, "Storing Flowbite assets"),
-            (self.get_htmx, "Storing HTMX assets"),
-            (self.get_alpine, "Storing AlpineJS assets")
+            (self.npm_installs, "Installing [red]NPM[/red] packages"),
+            (self.get_tw_standalone, "Retrieving [bright_blue]TailwindCSS[/bright_blue] standalone CLI"),
+            (self.get_flowbite, "Storing [bright_blue]Flowbite[/bright_blue] assets"),
+            (self.get_htmx, "Storing [bright_cyan]HTMX[/bright_cyan] assets"),
+            (self.get_alpine, "Storing [bright_cyan]AlpineJS[/bright_cyan] assets")
         ]
 
         super().__init__(tasks)

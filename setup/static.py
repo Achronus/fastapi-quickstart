@@ -11,7 +11,7 @@ class StaticAssetsController(ControllerBase):
     def __init__(self) -> None:
         tasks = [
             (self.create_dotenv, "Building [magenta].env[/magenta]"),
-            (self.move_setup_assets, "Creating static files and templates")
+            (self.move_setup_assets, "Creating [green]static files[/green] and [green]templates[/green]")
         ]
 
         super().__init__(tasks)

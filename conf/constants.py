@@ -1,7 +1,7 @@
 import os
 import sys
 
-from conf.helper import dirname_check, tw_standalone_filename_setter
+from conf.helper import dirname_check, set_tw_standalone_filename
 from config import STATIC_FILES_DIR
 
 
@@ -56,7 +56,7 @@ class AssetFilenames:
     _js_ext = '.min.js'
     _css_ext = '.min.css'
 
-    TW_STANDALONE = tw_standalone_filename_setter()
+    TW_STANDALONE = set_tw_standalone_filename()
     ALPINE = 'alpine' + _js_ext
     HTMX = 'htmx' + _js_ext
     FLOWBITE_CSS = 'flowbite' + _css_ext

@@ -21,7 +21,7 @@ def dirname_check(valid_names: list[str], dir_name: str, err_msg_start: str) -> 
     return dir_name
 
 
-def tw_standalone_filename_setter() -> str:
+def set_tw_standalone_filename() -> str:
     """Checks the type of operating system the user is on and assigns the appropriate TailwindCSS Standalone CLI installation. Returns the filename. If Unsupported, returns `unsupported`."""
     # Determine os
     system_platform = platform.system().lower()

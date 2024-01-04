@@ -19,5 +19,5 @@ def project_table(name: str, path: str) -> Table:
 
 def project_complete_panel() -> Panel:
     """Creates a printable project complete panel."""
-    panel = Panel.fit(f"\n{PARTY} Project created successfully! {PARTY}", height=5, border_style="green")
+    panel = Panel.fit(f"\n{PARTY} Project created successfully! {PARTY}", height=5, border_style="bright_green", style="bright_green")
     return panel

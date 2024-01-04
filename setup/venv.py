@@ -10,9 +10,9 @@ class VEnvController(ControllerBase):
     """A controller for creating a Python virtual environment."""
     def __init__(self) -> None:
         tasks = [
-            (self.create, "Building venv"),
-            (self.update_pip, "Updating PIP"),
-            (self.install, "Installing PIP packages"),
+            (self.create, "Building [yellow]venv[/yellow]"),
+            (self.update_pip, "Updating [yellow]PIP[/yellow]"),
+            (self.install, "Installing [yellow]PIP[/yellow] packages"),
             (self.requirements, "Creating [magenta]requirements.txt[/magenta]")
         ]
 
