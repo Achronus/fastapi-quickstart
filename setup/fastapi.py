@@ -9,5 +9,3 @@ class FastAPIFileController(ControllerBase):
         ]
 
         super().__init__(tasks)
-
-    
