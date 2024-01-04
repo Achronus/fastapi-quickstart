@@ -5,7 +5,6 @@ from .fastapi import create_fastapi_files
 from .clean import CleanupController
 from conf.constants import PASS
 
-import typer
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
@@ -29,4 +28,3 @@ def run_tasks() -> None:
             task_id = progress.add_task(description=new_desc, total=None)
             task(progress)
             progress.update(task_id, completed=1, description=f"{new_desc} {PASS}")
-            typer.Exit()
