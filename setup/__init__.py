@@ -1,7 +1,7 @@
 from .venv import VEnvController
 from .static import StaticAssetsController
 from .libraries import LibraryController
-from .fastapi import create_fastapi_files
+from .fastapi import FastAPIFileController
 from .clean import CleanupController
 from conf.constants import PASS
 

@@ -1,8 +1,7 @@
+from setup.base import ControllerBase
 
 
-
-
-def create_fastapi_files() -> None:
-    """FastAPI file creation controller."""
+class FastAPIFileController(ControllerBase):
+    """A FastAPI file creation controller."""
     pass
 
