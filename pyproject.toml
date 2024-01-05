@@ -6,7 +6,7 @@ authors = ["Ryan Partridge <rpartridge101@yahoo.co.uk>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
-fastapi-quickstart = "fastapi_quickstart.main:app"
+create = "fastapi_quickstart.main:app"
 
 [tool.poetry.dependencies]
 python = "^3.12"
