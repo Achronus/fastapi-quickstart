@@ -3,7 +3,7 @@ from .static import StaticAssetsController
 from .libraries import LibraryController
 from .fastapi import FastAPIFileController
 from .clean import CleanupController
-from conf.constants import PASS
+from ..conf.constants import PASS
 
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -13,7 +13,7 @@ TASKS = [
     (VEnvController().run, "Creating virtual environment..."),
     (StaticAssetsController().run, "Creating static assets..."),
     (LibraryController().run, "Installing libraries..."),
-    # (FastAPIFileController().run, "Creating FastAPI assets..."),
+    (FastAPIFileController().run, "Creating FastAPI assets..."),
     (CleanupController().run, "Cleaning project...")
 ]
 

@@ -54,7 +54,7 @@ There are a few other configurable options in `config.py`, such as `PIP_PACKAGES
 
 
 ### Creation
-1. To get started, clone the repository, enter the folder and run `setup.py` with a `name` (e.g., `my_project`) argument. This creates a new project inside the `parent` directory of the `fastapi-quickstart` directory:
+1. To get started, clone the repository, enter the folder and run `fastapi-quickstart` with a `name` (e.g., `my_project`) argument inside a `poetry shell`. This creates a new project inside the `parent` directory of the `fastapi-quickstart` directory:
 
 ```bash
 git clone https://github.com/Achronus/fastapi-quickstart.git
@@ -65,7 +65,11 @@ cd fastapi-quickstart
 ```
 
 ```bash
-python setup.py my_project
+poetry shell
+```
+
+```bash
+fastapi-quickstart my_project
 ```
 
 For example, if you have a parent folder called `projects` and are making a project called `todo_app` the project is created in `projects/todo_app` instead of `projects/fastapi-quickstart/todo_app`.
@@ -80,27 +84,15 @@ Simply, enter the new project folder:
 cd ../my_project
 ```
 
-Access the virtual environment:
+Access the poetry shell:
 ```bash
-# Windows
-venv\Scripts\activate
+poetry shell
 ```
 
-```bash
-# Linux/Mac
-source venv/bin/activate
-```
-
-Run the `uvicorn` server in one terminal and open `localhost:8000` (or `127.0.0.1:8000`) in your browser:
+Run the server and open `localhost:8000` (or `127.0.0.1:8000`) in your browser:
 
 ```bash
-uvicorn main:app --reload
-```
-
-And watch `TailwindCSS` in another (remember to be in the `my_project` folder!):
-
-```bash
-tailwindcss -i assets/css/input.css -o assets/css/output.css --watch --minify
+run-server
 ```
 
 ## Folder Structure
