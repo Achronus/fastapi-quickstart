@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-quickstart"
-version = "0.9.0"
+version = "1.0.0"
 description = "A quickstart tool for creating a FastAPI project with Jinja2, TailwindCSS, Flowbite, HTMX, and AlpineJS."
 authors = ["Ryan Partridge <rpartridge101@yahoo.co.uk>"]
 readme = "README.md"
