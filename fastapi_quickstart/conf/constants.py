@@ -47,7 +47,7 @@ VALID_STATIC_DIR_NAMES =  ['static', 'public', 'assets']
 STATIC_DIR_NAME = dirname_check(
     VALID_STATIC_DIR_NAMES, 
     STATIC_FILES_DIR,
-    err_msg_start="'STATIC_FILES_DIR' in 'config.py'"
+    err_msg_start="[blue]STATIC_FILES_DIR[/blue] in [yellow]config.py[/yellow]"
 )
 
 # Define Poetry script commands
