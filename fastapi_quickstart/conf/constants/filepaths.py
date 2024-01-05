@@ -29,6 +29,7 @@ class AssetFilenames:
     README = 'README.md'
     ENV = '.env'
     MAIN = 'main.py'
+    BUILD = 'build.py'
 
 
 # Asset URLs
@@ -70,6 +71,7 @@ class ProjectPaths:
     
     POETRY_CONF = os.path.join(ROOT, AssetFilenames.POETRY_CONF)
     PROJECT_MAIN = os.path.join(PROJECT, AssetFilenames.MAIN)
+    PROJECT_BUILD = os.path.join(PROJECT, AssetFilenames.BUILD)
 
     STATIC = os.path.join(PROJECT, STATIC_DIR_NAME)
     CSS = os.path.join(STATIC, SetupAssetsDirNames.CSS)

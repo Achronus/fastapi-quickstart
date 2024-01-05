@@ -89,7 +89,7 @@ Access the poetry shell:
 poetry shell
 ```
 
-Run the server in one terminal and open `localhost:8000` (or `127.0.0.1:8000`) in your browser:
+Run the server in one terminal and open `localhost:8000/docs` (or `127.0.0.1:8000/docs`) in your browser:
 
 ```bash
 run
@@ -134,6 +134,7 @@ project_name
 |   |   └── __init__.py
 |   └── .env
 |   └── .gitignore
+|   └── build.py
 |   └── main.py
 |   └── tailwind.config.js
 |   └── tailwindcss
@@ -141,4 +142,5 @@ project_name
 └── pyproject.toml
 └── README.md
 └── requirements.txt
+└── database.db
 ```
