@@ -23,7 +23,8 @@ class VEnvController(ControllerBase):
             (self.update_pip, "Updating [yellow]PIP[/yellow]"),
             (self.install, "Installing [yellow]PIP[/yellow] packages"),
             (self.requirements, "Creating [magenta]requirements.txt[/magenta]"),
-            (self.init_project, f"Initalising [cyan]{PROJECT_NAME}[/cyan] as [green]Poetry[/green] project")
+            (self.init_project, f"Initalising [cyan]{PROJECT_NAME}[/cyan] as [green]Poetry[/green] project"),
+            (self.add_dependencies, "Adding [yellow]PIP[/yellow] packages to [green]Poetry[/green]")
         ]
 
         super().__init__(tasks)
@@ -52,6 +53,7 @@ class VEnvController(ControllerBase):
     @staticmethod
     def init_project() -> None:
         """Creates a poetry project."""
+        # Create Poetry project
         subprocess.run(["poetry", "new", PROJECT_NAME], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Organise new project directory
@@ -61,6 +63,13 @@ class VEnvController(ControllerBase):
 
         # Add scripts to pyproject.toml
         insert_into_file(SCRIPT_INSERT_LOC, f'\n\n{SCRIPT_CONTENT}', ProjectDirPaths.POETRY_CONF)
+
+    @staticmethod
+    def add_dependencies() -> None:
+        """Adds PIP packages to the poetry project."""
+        subprocess.run(["poetry", "shell"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        subprocess.run(["poetry", "add", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Move into project directory
         os.chdir(ProjectDirPaths.PROJECT)
