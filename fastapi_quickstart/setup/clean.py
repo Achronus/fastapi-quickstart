@@ -3,6 +3,7 @@ import shutil
 import subprocess
 
 from ..conf.helper import tw_executable_exists
+from ..conf.constants.filepaths import ProjectDirPaths
 from .base import ControllerBase
 
 
@@ -21,8 +22,8 @@ class CleanupController(ControllerBase):
     def node_modules() -> None:
         """Removes the `node_modules` folder if `tailwindcss` does not exist."""
         # If exists, remove node_modules
-        if tw_executable_exists(os.getcwd()):
-            shutil.rmtree(os.path.join(os.getcwd(), 'node_modules'))
+        if tw_executable_exists(ProjectDirPaths.PROJECT):
+            shutil.rmtree(os.path.join(ProjectDirPaths.PROJECT, 'node_modules'))
 
     @staticmethod
     def poetry_install() -> None:
@@ -33,4 +34,5 @@ class CleanupController(ControllerBase):
     @staticmethod
     def remove_files() -> None:
         """Removes redundant files."""
-        os.remove(os.path.join(os.getcwd(), '__init__.py'))
+        os.remove(os.path.join(ProjectDirPaths.PROJECT, '__init__.py'))
+        shutil.rmtree(os.path.join(ProjectDirPaths.ROOT, 'env'))
