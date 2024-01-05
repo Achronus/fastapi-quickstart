@@ -11,7 +11,7 @@ DATABASE_URL = 'sqlite:///./sql_app.db'
 
 # Pip packages to install
 ADDITIONAL_PIP_PACKAGES = [
-    
+    "pytest"
 ]
 
 # .env file additional parameters

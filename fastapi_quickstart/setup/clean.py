@@ -26,5 +26,5 @@ class CleanupController(ControllerBase):
     @staticmethod
     def poetry_install() -> None:
         """Finalise the application with a poetry install."""
-        subprocess.run(["poetry", "shell"], check=True)
-        subprocess.run(["poetry", "install"], check=True)
+        subprocess.run(["poetry", "shell"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(["poetry", "install"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
