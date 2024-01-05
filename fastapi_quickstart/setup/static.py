@@ -1,14 +1,8 @@
 import os
 import shutil
 
-from ..conf.constants import (
-    STATIC_DIR_NAME, 
-    VALID_STATIC_DIR_NAMES, 
-    CORE_ENV_PARAMS,
-    AssetFilenames,
-    ProjectDirPaths,
-    SetupDirPaths
-)
+from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, CORE_ENV_PARAMS
+from ..conf.constants.filepaths import AssetFilenames, ProjectDirPaths, SetupDirPaths
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
 

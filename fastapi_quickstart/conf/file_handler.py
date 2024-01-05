@@ -21,7 +21,9 @@ def read_all_file_content(path: str) -> str:
 
 
 def insert_into_file(position: str, new_content: str, path: str) -> None:
-    """Adds `new_content` to a file (`path`) at a specific `position`."""
+    """Adds `new_content` to a file (`path`) at a specific `position`.
+    
+    Note: `new = (position + new_content).strip()`."""
     content = read_all_file_content(path)
 
     content = content.replace(

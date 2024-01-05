@@ -6,12 +6,10 @@ from ..conf.constants import (
     VENV, 
     VENV_NAME,
     CORE_PIP_PACKAGES, 
-    PROJECT_NAME,
     SCRIPT_INSERT_LOC,
-    SCRIPT_CONTENT,
-    ProjectDirPaths,
-    AssetFilenames
+    SCRIPT_CONTENT
 )
+from ..conf.constants.filepaths import PROJECT_NAME, ProjectDirPaths, AssetFilenames
 from ..conf.file_handler import insert_into_file
 from ..config import ADDITIONAL_PIP_PACKAGES
 from .base import ControllerBase
