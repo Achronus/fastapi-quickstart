@@ -54,7 +54,7 @@ class VEnvController(ControllerBase):
     @staticmethod
     def init_project() -> None:
         """Creates a poetry project."""
-        subprocess.run(["poetry", "new", PROJECT_NAME], shell=True)
+        subprocess.run(["poetry", "new", PROJECT_NAME], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Organise new project directory
         shutil.rmtree(os.path.join(ProjectDirPaths.PROJECT, PROJECT_NAME))
