@@ -1,8 +1,9 @@
 import os
 import shutil
 
-from .conf.constants import STATIC_DIR_NAME
-from .conf.helper import set_tw_standalone_filename, store_project_name
+from .conf.constants import STATIC_DIR_NAME, SetupDirPaths
+from .conf.helper import set_tw_standalone_filename
+from .conf.file_handler import write_to_file
 from .setup import run_tasks
 from .utils.helper import strip_whitespace_and_dashes
 from .utils.printables import project_table, project_complete_panel
@@ -23,8 +24,8 @@ def main(name: Annotated[str, typer.Argument(help="The name of the project", sho
     name = strip_whitespace_and_dashes(name)
     path = os.path.join(os.path.dirname(os.getcwd()), name)
 
-    # Store name in conf
-    store_project_name(name)
+    # Store name in conf dir
+    write_to_file(name, SetupDirPaths.PROJECT_NAME)
 
     # Provide pretty print formats
     name_print = f'[cyan]{name}[/cyan]'

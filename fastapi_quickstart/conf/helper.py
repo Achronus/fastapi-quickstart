@@ -46,21 +46,3 @@ def set_tw_standalone_filename() -> str:
         filename = 'unsupported'
 
     return filename
-
-
-def store_project_name(name: str) -> None:
-    """Stores the project name in the `conf/name` file."""
-    name_path = os.path.join(os.getcwd(), 'fastapi_quickstart', 'conf', 'name')
-
-    with open(name_path, "w") as file:
-        file.write(name)
-
-
-def get_project_name() -> str:
-    """Retrieves the project name from the `name` file."""
-    name_path = os.path.join(os.getcwd(), 'fastapi_quickstart', 'conf', 'name')
-
-    with open(name_path, 'r') as file:
-        content = file.read()
-    
-    return content
