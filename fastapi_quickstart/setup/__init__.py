@@ -10,11 +10,11 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 
 TASKS = [
-    (VEnvController().run, "Creating virtual environment..."),
-    (StaticAssetsController().run, "Creating static assets..."),
-    (LibraryController().run, "Installing libraries..."),
-    (FastAPIFileController().run, "Checking FastAPI assets..."),
-    (CleanupController().run, "Cleaning project...")
+    (VEnvController, "Creating virtual environment..."),
+    (StaticAssetsController, "Creating static assets..."),
+    (LibraryController, "Installing libraries..."),
+    (FastAPIFileController, "Checking FastAPI assets..."),
+    (CleanupController, "Cleaning project...")
 ]
 
 console = Console()
@@ -26,5 +26,5 @@ def run_tasks() -> None:
         for idx, (task, desc) in enumerate(TASKS, 1):
             new_desc = f"{idx}. {desc}"
             task_id = progress.add_task(description=new_desc, total=None)
-            task(progress)
+            task().run(progress)
             progress.update(task_id, completed=1, description=f"{new_desc} {PASS}")
