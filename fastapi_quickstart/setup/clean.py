@@ -11,6 +11,7 @@ class CleanupController(ControllerBase):
     def __init__(self) -> None:
         tasks = [
             (self.node_modules, "Removing [magenta]node_modules[/magenta]"),
+            (self.remove_files, "Removing redundant files"),
             (self.poetry_install, "Finalising project")
         ]
 
@@ -28,3 +29,8 @@ class CleanupController(ControllerBase):
         """Finalise the application with a poetry install."""
         subprocess.run(["poetry", "shell"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         subprocess.run(["poetry", "install"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    @staticmethod
+    def remove_files() -> None:
+        """Removes redundant files."""
+        os.remove(os.path.join(os.getcwd(), '__init__.py'))
