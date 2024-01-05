@@ -12,6 +12,7 @@ class CleanupController(ControllerBase):
     def __init__(self) -> None:
         tasks = [
             (self.node_modules, "Removing [magenta]node_modules[/magenta]"),
+            (self.delete_venv, "Removing [yellow]venv[/yellow]"),
             (self.remove_files, "Removing redundant files"),
             (self.poetry_install, "Finalising project")
         ]
@@ -32,7 +33,12 @@ class CleanupController(ControllerBase):
         subprocess.run(["poetry", "install"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     @staticmethod
+    def delete_venv() -> None:
+        """Deletes the virtual environment folder and assets."""
+        shutil.rmtree(os.path.join(ProjectDirPaths.ROOT, 'env'))
+
+    @staticmethod
     def remove_files() -> None:
         """Removes redundant files."""
         os.remove(os.path.join(ProjectDirPaths.PROJECT, '__init__.py'))
-        shutil.rmtree(os.path.join(ProjectDirPaths.ROOT, 'env'))
+
