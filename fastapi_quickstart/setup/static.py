@@ -1,7 +1,8 @@
 import os
 import shutil
 
-from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, SetupDirPaths
+from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, CORE_ENV_PARAMS
+from ..conf.constants.filepaths import AssetFilenames, ProjectPaths, SetupDirPaths
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
 
@@ -19,15 +20,14 @@ class StaticAssetsController(ControllerBase):
     @staticmethod
     def create_dotenv() -> None:
         """Creates a `.env` file and adds items to it."""
-        with open(".env", "a") as file:
-            for item in ENV_FILE_ADDITIONAL_PARAMS:
+        with open(AssetFilenames.ENV, "a") as file:
+            for item in CORE_ENV_PARAMS + ENV_FILE_ADDITIONAL_PARAMS:
                 file.write(item)
 
     @staticmethod
     def move_setup_assets() -> None:
         """Moves the items in the `setup_assets` folder into the project directory."""
         static_exists = False
-        correct_static_path = os.path.join(os.getcwd(), STATIC_DIR_NAME)
 
         # Move assets into root project dir
         shutil.copytree(SetupDirPaths.ASSETS, os.getcwd(), dirs_exist_ok=True)
@@ -38,13 +38,17 @@ class StaticAssetsController(ControllerBase):
             # Check if static folder exists and matches desired name
             if os.path.exists(dir_path) and os.path.isdir(dir_name):
                 if dir_name != STATIC_DIR_NAME:
-                    os.rename(dir_path, correct_static_path)
+                    os.rename(dir_path, ProjectPaths.STATIC)
                 static_exists = True
                 break
         
         # If static folder doesn't exist, make one
         if not static_exists:
-            os.mkdir(correct_static_path)
-            os.mkdir(os.path.join(correct_static_path, 'css'))
-            os.mkdir(os.path.join(correct_static_path, 'js'))
-            os.mkdir(os.path.join(correct_static_path, 'imgs'))
+            static_dirs = [
+                ProjectPaths.STATIC, 
+                ProjectPaths.CSS, 
+                ProjectPaths.JS, 
+                ProjectPaths.IMGS
+            ]
+            for item in static_dirs:
+                os.mkdir(item)

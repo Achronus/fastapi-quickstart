@@ -2,14 +2,9 @@ import os
 import shutil
 import subprocess
 
-from ..conf.constants import (
-    VENV, 
-    CORE_PIP_PACKAGES, 
-    PROJECT_NAME,
-    START_SERVER_CMD,
-    WATCH_TW_CMD,
-    ProjectDirPaths
-)
+from ..conf.constants import VENV, VENV_NAME, CORE_PIP_PACKAGES
+from ..conf.constants.filepaths import PROJECT_NAME, ProjectPaths, AssetFilenames
+from ..conf.constants.poetry import SCRIPT_INSERT_LOC, SCRIPT_CONTENT
 from ..conf.file_handler import insert_into_file
 from ..config import ADDITIONAL_PIP_PACKAGES
 from .base import ControllerBase
@@ -23,7 +18,8 @@ class VEnvController(ControllerBase):
             (self.update_pip, "Updating [yellow]PIP[/yellow]"),
             (self.install, "Installing [yellow]PIP[/yellow] packages"),
             (self.requirements, "Creating [magenta]requirements.txt[/magenta]"),
-            (self.init_project, f"Initalising [cyan]{PROJECT_NAME}[/cyan] as [green]Poetry[/green] project")
+            (self.init_project, f"Initalising [cyan]{PROJECT_NAME}[/cyan] as [green]Poetry[/green] project"),
+            (self.add_dependencies, "Adding [yellow]PIP[/yellow] packages to [green]Poetry[/green]")
         ]
 
         super().__init__(tasks)
@@ -31,7 +27,7 @@ class VEnvController(ControllerBase):
     @staticmethod
     def create() -> None:
         """Creates a new virtual environment."""
-        subprocess.run(["python", "-m", "venv", "venv"])
+        subprocess.run(["python", "-m", "venv", VENV_NAME])
 
     @staticmethod
     def update_pip() -> None:
@@ -46,22 +42,29 @@ class VEnvController(ControllerBase):
     @staticmethod
     def requirements() -> None:
         """Creates a `requirements.txt` file."""
-        with open("requirements.txt", "w") as file:
+        with open(AssetFilenames.REQUIREMENTS, "w") as file:
             subprocess.Popen([os.path.join(VENV, "pip"), "freeze"], stdout=file)
 
     @staticmethod
     def init_project() -> None:
         """Creates a poetry project."""
-        subprocess.run(["poetry", "new", PROJECT_NAME], shell=True)
+        # Create Poetry project
+        subprocess.run(["poetry", "new", PROJECT_NAME], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Organise new project directory
-        shutil.rmtree(os.path.join(ProjectDirPaths.PROJECT, PROJECT_NAME))
-        shutil.move(os.path.join(ProjectDirPaths.PROJECT, 'pyproject.toml'), ProjectDirPaths.ROOT)
-        shutil.move(os.path.join(ProjectDirPaths.PROJECT, 'README.md'), ProjectDirPaths.ROOT)
+        shutil.rmtree(os.path.join(ProjectPaths.PROJECT, PROJECT_NAME))
+        shutil.move(ProjectPaths.INIT_POETRY_CONF, ProjectPaths.ROOT)
+        shutil.move(ProjectPaths.INIT_README, ProjectPaths.ROOT)
 
         # Add scripts to pyproject.toml
-        new_content = f'\n\n[tool.poetry.scripts]\nrun-server = "{START_SERVER_CMD} && {WATCH_TW_CMD}"'
-        insert_into_file('readme = "README.md"', new_content, ProjectDirPaths.POETRY_CONF)
+        insert_into_file(SCRIPT_INSERT_LOC, f'\n\n{SCRIPT_CONTENT}', ProjectPaths.POETRY_CONF)
+
+    @staticmethod
+    def add_dependencies() -> None:
+        """Adds PIP packages to the poetry project."""
+        subprocess.run(["poetry", "shell"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        subprocess.run(["poetry", "add", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Move into project directory
-        os.chdir(ProjectDirPaths.PROJECT)
+        os.chdir(ProjectPaths.PROJECT)
