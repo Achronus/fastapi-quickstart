@@ -1,7 +1,8 @@
 import os
 import shutil
 
-from .conf.constants import STATIC_DIR_NAME, SetupDirPaths
+from .conf.constants import STATIC_DIR_NAME
+from .conf.constants.filepaths import SetupDirPaths
 from .conf.helper import set_tw_standalone_filename
 from .conf.file_handler import write_to_file
 from .setup import run_tasks
