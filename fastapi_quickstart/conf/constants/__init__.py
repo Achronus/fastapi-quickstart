@@ -48,18 +48,3 @@ STATIC_DIR_NAME = dirname_check(
     STATIC_FILES_DIR,
     err_msg_start="[blue]STATIC_FILES_DIR[/blue] in [yellow]config.py[/yellow]"
 )
-
-# Define Poetry script commands
-TW_CMD = f'tailwindcss -i ./{STATIC_DIR_NAME}/css/input.css -o ./{STATIC_DIR_NAME}/css/output.css'
-
-START_SERVER_CMD = "uvicorn main:app --reload"
-WATCH_TW_CMD = f"{TW_CMD} --watch --minify"
-
-
-# Define Poetry script content
-# Specific to setup/venv.py -> init_project()
-SCRIPT_INSERT_LOC = 'readme = "README.md"'
-SCRIPT_CONTENT = '\n'.join([
-    "[tool.poetry.scripts]",
-    f'run-server = "{START_SERVER_CMD} && {WATCH_TW_CMD}"'
-])

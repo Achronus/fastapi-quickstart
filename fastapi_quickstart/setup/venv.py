@@ -2,14 +2,9 @@ import os
 import shutil
 import subprocess
 
-from ..conf.constants import (
-    VENV, 
-    VENV_NAME,
-    CORE_PIP_PACKAGES, 
-    SCRIPT_INSERT_LOC,
-    SCRIPT_CONTENT
-)
+from ..conf.constants import VENV, VENV_NAME, CORE_PIP_PACKAGES
 from ..conf.constants.filepaths import PROJECT_NAME, ProjectDirPaths, AssetFilenames
+from ..conf.constants.poetry import SCRIPT_INSERT_LOC, SCRIPT_CONTENT
 from ..conf.file_handler import insert_into_file
 from ..config import ADDITIONAL_PIP_PACKAGES
 from .base import ControllerBase

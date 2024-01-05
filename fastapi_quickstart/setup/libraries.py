@@ -3,7 +3,8 @@ import shutil
 import subprocess
 import urllib.request
 
-from ..conf.constants import TW_CMD, NPM_PACKAGES
+from ..conf.constants import NPM_PACKAGES
+from ..conf.constants.poetry import TW_CMD
 from ..conf.constants.filepaths import AssetFilenames, AssetUrls, ProjectDirPaths
 from .base import ControllerBase
 
