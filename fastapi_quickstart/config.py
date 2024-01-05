@@ -6,7 +6,7 @@ STATIC_FILES_DIR = "assets"
 VENV_NAME = 'env'
 
 # Define your database URL
-DATABASE_URL = 'sqlite:///./sql_app.db'
+DATABASE_URL = 'sqlite:///./database.db'
 # DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 # Pip packages to install
