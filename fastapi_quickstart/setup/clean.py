@@ -41,4 +41,6 @@ class CleanupController(ControllerBase):
     def remove_files() -> None:
         """Removes redundant files."""
         os.remove(os.path.join(ProjectPaths.PROJECT, '__init__.py'))
+        os.remove(os.path.join(ProjectPaths.PROJECT, 'package.json'))
+        os.remove(os.path.join(ProjectPaths.PROJECT, 'package-lock.json'))
 
