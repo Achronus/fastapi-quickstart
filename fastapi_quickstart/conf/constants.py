@@ -3,7 +3,7 @@ import sys
 
 from .helper import dirname_check, set_tw_standalone_filename
 from .file_handler import read_all_file_content
-from ..config import STATIC_FILES_DIR, VENV_NAME
+from ..config import STATIC_FILES_DIR, VENV_NAME, DATABASE_URL
 
 
 # Change venv activation depending on OS
@@ -18,9 +18,15 @@ else:
 CORE_PIP_PACKAGES = [
     "fastapi", 
     "uvicorn[standard]", 
+    "sqlalchemy",
     "jinja2", 
     "python-dotenv",
     "poetry"
+]
+
+# Define core .env file parameters
+CORE_ENV_PARAMS = [
+    f'DATABASE_URL={DATABASE_URL}'
 ]
 
 # Define core NPM packages to install

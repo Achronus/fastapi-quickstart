@@ -1,7 +1,12 @@
 import os
 import shutil
 
-from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, SetupDirPaths
+from ..conf.constants import (
+    STATIC_DIR_NAME, 
+    VALID_STATIC_DIR_NAMES, 
+    CORE_ENV_PARAMS,
+    SetupDirPaths
+)
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
 
@@ -20,7 +25,7 @@ class StaticAssetsController(ControllerBase):
     def create_dotenv() -> None:
         """Creates a `.env` file and adds items to it."""
         with open(".env", "a") as file:
-            for item in ENV_FILE_ADDITIONAL_PARAMS:
+            for item in CORE_ENV_PARAMS + ENV_FILE_ADDITIONAL_PARAMS:
                 file.write(item)
 
     @staticmethod
