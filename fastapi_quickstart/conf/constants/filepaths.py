@@ -28,6 +28,7 @@ class AssetFilenames:
     POETRY_CONF = 'pyproject.toml'
     README = 'README.md'
     ENV = '.env'
+    MAIN = 'main.py'
 
 
 # Asset URLs
@@ -59,8 +60,8 @@ class SetupDirPaths:
 PROJECT_NAME = read_all_file_content(SetupDirPaths.PROJECT_NAME)
 
 
-# Project directory filepaths
-class ProjectDirPaths:
+# Project directory and filename filepaths
+class ProjectPaths:
     ROOT = os.path.join(os.path.dirname(os.getcwd()), PROJECT_NAME)
     PROJECT = os.path.join(ROOT, PROJECT_NAME)
 
@@ -68,6 +69,7 @@ class ProjectDirPaths:
     INIT_README = os.path.join(PROJECT, AssetFilenames.README)
     
     POETRY_CONF = os.path.join(ROOT, AssetFilenames.POETRY_CONF)
+    PROJECT_MAIN = os.path.join(PROJECT, AssetFilenames.MAIN)
 
     STATIC = os.path.join(PROJECT, STATIC_DIR_NAME)
     CSS = os.path.join(STATIC, SetupAssetsDirNames.CSS)

@@ -3,7 +3,7 @@ import shutil
 import subprocess
 
 from ..conf.constants import VENV, VENV_NAME, CORE_PIP_PACKAGES
-from ..conf.constants.filepaths import PROJECT_NAME, ProjectDirPaths, AssetFilenames
+from ..conf.constants.filepaths import PROJECT_NAME, ProjectPaths, AssetFilenames
 from ..conf.constants.poetry import SCRIPT_INSERT_LOC, SCRIPT_CONTENT
 from ..conf.file_handler import insert_into_file
 from ..config import ADDITIONAL_PIP_PACKAGES
@@ -52,12 +52,12 @@ class VEnvController(ControllerBase):
         subprocess.run(["poetry", "new", PROJECT_NAME], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Organise new project directory
-        shutil.rmtree(os.path.join(ProjectDirPaths.PROJECT, PROJECT_NAME))
-        shutil.move(ProjectDirPaths.INIT_POETRY_CONF, ProjectDirPaths.ROOT)
-        shutil.move(ProjectDirPaths.INIT_README, ProjectDirPaths.ROOT)
+        shutil.rmtree(os.path.join(ProjectPaths.PROJECT, PROJECT_NAME))
+        shutil.move(ProjectPaths.INIT_POETRY_CONF, ProjectPaths.ROOT)
+        shutil.move(ProjectPaths.INIT_README, ProjectPaths.ROOT)
 
         # Add scripts to pyproject.toml
-        insert_into_file(SCRIPT_INSERT_LOC, f'\n\n{SCRIPT_CONTENT}', ProjectDirPaths.POETRY_CONF)
+        insert_into_file(SCRIPT_INSERT_LOC, f'\n\n{SCRIPT_CONTENT}', ProjectPaths.POETRY_CONF)
 
     @staticmethod
     def add_dependencies() -> None:
@@ -67,4 +67,4 @@ class VEnvController(ControllerBase):
         subprocess.run(["poetry", "add", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Move into project directory
-        os.chdir(ProjectDirPaths.PROJECT)
+        os.chdir(ProjectPaths.PROJECT)

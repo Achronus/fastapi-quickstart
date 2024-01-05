@@ -5,7 +5,7 @@ import urllib.request
 
 from ..conf.constants import NPM_PACKAGES
 from ..conf.constants.poetry import TW_CMD
-from ..conf.constants.filepaths import AssetFilenames, AssetUrls, ProjectDirPaths
+from ..conf.constants.filepaths import AssetFilenames, AssetUrls, ProjectPaths
 from .base import ControllerBase
 
 
@@ -51,8 +51,8 @@ class LibraryController(ControllerBase):
     @staticmethod
     def get_flowbite() -> None:
         """Copies Flowbite CSS and JS from `node_modules`."""
-        shutil.copy(AssetUrls.FLOWBITE_CSS, os.path.join(ProjectDirPaths.CSS, AssetFilenames.FLOWBITE_CSS))
-        shutil.copy(AssetUrls.FLOWBITE_JS, os.path.join(ProjectDirPaths.JS, AssetFilenames.FLOWBITE_JS))
+        shutil.copy(AssetUrls.FLOWBITE_CSS, os.path.join(ProjectPaths.CSS, AssetFilenames.FLOWBITE_CSS))
+        shutil.copy(AssetUrls.FLOWBITE_JS, os.path.join(ProjectPaths.JS, AssetFilenames.FLOWBITE_JS))
 
     @staticmethod
     def get_htmx() -> None:
@@ -60,10 +60,10 @@ class LibraryController(ControllerBase):
         with urllib.request.urlopen(AssetUrls.HTMX) as response:
             htmx_content = response.read().decode('utf-8')
         
-        with open(os.path.join(ProjectDirPaths.JS, AssetFilenames.HTMX), 'w') as file:
+        with open(os.path.join(ProjectPaths.JS, AssetFilenames.HTMX), 'w') as file:
             file.write(htmx_content)
 
     @staticmethod
     def get_alpine() -> None:
         """Retrieves `AlpineJS` from `node_modules`."""
-        shutil.copy(AssetUrls.ALPINE, os.path.join(ProjectDirPaths.JS, AssetFilenames.ALPINE))
+        shutil.copy(AssetUrls.ALPINE, os.path.join(ProjectPaths.JS, AssetFilenames.ALPINE))

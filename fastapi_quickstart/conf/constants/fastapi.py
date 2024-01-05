@@ -1,6 +1,6 @@
 import os
 
-from .filepaths import ProjectDirPaths
+from .filepaths import ProjectPaths
 
 
 # FastAPI directory and filenames names
@@ -14,7 +14,7 @@ class FastAPIFilenames:
 
 # FastAPI directory filepaths
 class FastAPIDirPaths:
-    DATABASE_DIR = os.path.join(ProjectDirPaths.PROJECT, FastAPIDirnames.DATABASE)
+    DATABASE_DIR = os.path.join(ProjectPaths.PROJECT, FastAPIDirnames.DATABASE)
     DATABASE_INIT_FILE = os.path.join(DATABASE_DIR, FastAPIFilenames.BASE)
 
 

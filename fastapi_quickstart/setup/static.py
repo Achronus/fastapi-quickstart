@@ -2,7 +2,7 @@ import os
 import shutil
 
 from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, CORE_ENV_PARAMS
-from ..conf.constants.filepaths import AssetFilenames, ProjectDirPaths, SetupDirPaths
+from ..conf.constants.filepaths import AssetFilenames, ProjectPaths, SetupDirPaths
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
 
@@ -38,17 +38,17 @@ class StaticAssetsController(ControllerBase):
             # Check if static folder exists and matches desired name
             if os.path.exists(dir_path) and os.path.isdir(dir_name):
                 if dir_name != STATIC_DIR_NAME:
-                    os.rename(dir_path, ProjectDirPaths.STATIC)
+                    os.rename(dir_path, ProjectPaths.STATIC)
                 static_exists = True
                 break
         
         # If static folder doesn't exist, make one
         if not static_exists:
             static_dirs = [
-                ProjectDirPaths.STATIC, 
-                ProjectDirPaths.CSS, 
-                ProjectDirPaths.JS, 
-                ProjectDirPaths.IMGS
+                ProjectPaths.STATIC, 
+                ProjectPaths.CSS, 
+                ProjectPaths.JS, 
+                ProjectPaths.IMGS
             ]
             for item in static_dirs:
                 os.mkdir(item)

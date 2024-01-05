@@ -5,7 +5,7 @@ from .filepaths import PROJECT_NAME
 # Define Poetry script commands
 TW_CMD = f'tailwindcss -i ./{STATIC_DIR_NAME}/css/input.css -o ./{STATIC_DIR_NAME}/css/output.css'
 
-START_SERVER_CMD = f"uvicorn {PROJECT_NAME}.main:start"
+START_SERVER_CMD = f"{PROJECT_NAME}.main:start"
 WATCH_TW_CMD = f"{TW_CMD} --watch --minify"
 
 
@@ -14,5 +14,9 @@ WATCH_TW_CMD = f"{TW_CMD} --watch --minify"
 SCRIPT_INSERT_LOC = 'readme = "README.md"'
 SCRIPT_CONTENT = '\n'.join([
     "[tool.poetry.scripts]",
-    f'run-server = "{START_SERVER_CMD} && {WATCH_TW_CMD}"'
+    f'run = "{START_SERVER_CMD}"',
+    f'watch = "{WATCH_TW_CMD}"'
 ])
+
+START_CMD_OLD = 'uvicorn.run("main:app"'
+START_CMD_NEW = f'uvicorn.run("{PROJECT_NAME}.main:app"'
