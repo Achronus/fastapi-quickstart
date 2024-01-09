@@ -79,7 +79,7 @@ class ProjectPaths:
         self.PROJECT_MAIN = os.path.join(self.PROJECT, AssetFilenames.MAIN)
         self.PROJECT_BUILD = os.path.join(self.PROJECT, AssetFilenames.BUILD)
 
-        self.STATIC = os.path.join(self.PROJECT, STATIC_DIR_NAME)
+        self.STATIC = os.path.join(self.ROOT, STATIC_DIR_NAME)
         self.CSS = os.path.join(self.STATIC, SetupAssetsDirNames.CSS)
         self.JS = os.path.join(self.STATIC, SetupAssetsDirNames.JS)
         self.IMGS = os.path.join(self.STATIC, SetupAssetsDirNames.IMGS)
