@@ -2,7 +2,6 @@ import os
 
 from . import STATIC_DIR_NAME
 from ..helper import set_tw_standalone_filename
-from ..file_handler import read_all_file_content
 
 
 # Setup assets directory names
@@ -57,23 +56,30 @@ class SetupDirPaths:
     PROJECT_NAME = os.path.join(SETUP_ROOT, 'conf', 'name')
 
 
-# Store project name
-PROJECT_NAME = read_all_file_content(SetupDirPaths.PROJECT_NAME)
+def set_project_name(name: str) -> str:
+    os.environ['PROJECT_NAME'] = name
+
+
+def get_project_name() -> str:
+    return os.environ.get('PROJECT_NAME')
 
 
 # Project directory and filename filepaths
 class ProjectPaths:
-    ROOT = os.path.join(os.path.dirname(os.getcwd()), PROJECT_NAME)
-    PROJECT = os.path.join(ROOT, PROJECT_NAME)
+    def __init__(self) -> None:
+        self.PROJECT_NAME = get_project_name()
 
-    INIT_POETRY_CONF = os.path.join(PROJECT, AssetFilenames.POETRY_CONF)
-    INIT_README = os.path.join(PROJECT, AssetFilenames.README)
-    
-    POETRY_CONF = os.path.join(ROOT, AssetFilenames.POETRY_CONF)
-    PROJECT_MAIN = os.path.join(PROJECT, AssetFilenames.MAIN)
-    PROJECT_BUILD = os.path.join(PROJECT, AssetFilenames.BUILD)
+        self.ROOT = os.path.join(os.path.dirname(os.getcwd()), self.PROJECT_NAME)
+        self.PROJECT = os.path.join(self.ROOT, self.PROJECT_NAME)
 
-    STATIC = os.path.join(PROJECT, STATIC_DIR_NAME)
-    CSS = os.path.join(STATIC, SetupAssetsDirNames.CSS)
-    JS = os.path.join(STATIC, SetupAssetsDirNames.JS)
-    IMGS = os.path.join(STATIC, SetupAssetsDirNames.IMGS)
+        self.INIT_POETRY_CONF = os.path.join(self.PROJECT, AssetFilenames.POETRY_CONF)
+        self.INIT_README = os.path.join(self.PROJECT, AssetFilenames.README)
+        
+        self.POETRY_CONF = os.path.join(self.ROOT, AssetFilenames.POETRY_CONF)
+        self.PROJECT_MAIN = os.path.join(self.PROJECT, AssetFilenames.MAIN)
+        self.PROJECT_BUILD = os.path.join(self.PROJECT, AssetFilenames.BUILD)
+
+        self.STATIC = os.path.join(self.PROJECT, STATIC_DIR_NAME)
+        self.CSS = os.path.join(self.STATIC, SetupAssetsDirNames.CSS)
+        self.JS = os.path.join(self.STATIC, SetupAssetsDirNames.JS)
+        self.IMGS = os.path.join(self.STATIC, SetupAssetsDirNames.IMGS)

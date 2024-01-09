@@ -3,7 +3,6 @@ import shutil
 import subprocess
 
 from ..conf.helper import tw_executable_exists
-from ..conf.constants.filepaths import ProjectPaths
 from .base import ControllerBase
 
 
@@ -19,28 +18,24 @@ class CleanupController(ControllerBase):
 
         super().__init__(tasks)
     
-    @staticmethod
-    def node_modules() -> None:
+    def node_modules(self) -> None:
         """Removes the `node_modules` folder if `tailwindcss` does not exist."""
         # If exists, remove node_modules
-        if tw_executable_exists(ProjectPaths.PROJECT):
-            shutil.rmtree(os.path.join(ProjectPaths.PROJECT, 'node_modules'))
+        if tw_executable_exists(self.project_paths.PROJECT):
+            shutil.rmtree(os.path.join(self.project_paths.PROJECT, 'node_modules'))
 
-    @staticmethod
-    def poetry_install() -> None:
+    def poetry_install(self) -> None:
         """Finalise the application with a poetry install."""
         subprocess.run(["poetry", "shell"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         subprocess.run(["poetry", "install"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    @staticmethod
-    def delete_venv() -> None:
+    def delete_venv(self) -> None:
         """Deletes the virtual environment folder and assets."""
-        shutil.rmtree(os.path.join(ProjectPaths.ROOT, 'env'))
+        shutil.rmtree(os.path.join(self.project_paths.ROOT, 'env'))
 
-    @staticmethod
-    def remove_files() -> None:
+    def remove_files(self) -> None:
         """Removes redundant files."""
-        os.remove(os.path.join(ProjectPaths.PROJECT, '__init__.py'))
-        os.remove(os.path.join(ProjectPaths.PROJECT, 'package.json'))
-        os.remove(os.path.join(ProjectPaths.PROJECT, 'package-lock.json'))
+        os.remove(os.path.join(self.project_paths.PROJECT, '__init__.py'))
+        os.remove(os.path.join(self.project_paths.PROJECT, 'package.json'))
+        os.remove(os.path.join(self.project_paths.PROJECT, 'package-lock.json'))
 

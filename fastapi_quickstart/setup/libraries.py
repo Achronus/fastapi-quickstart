@@ -4,8 +4,7 @@ import subprocess
 import urllib.request
 
 from ..conf.constants import NPM_PACKAGES
-from ..conf.constants.poetry import TW_CMD
-from ..conf.constants.filepaths import AssetFilenames, AssetUrls, ProjectPaths
+from ..conf.constants.filepaths import AssetFilenames, AssetUrls
 from .base import ControllerBase
 
 
@@ -25,6 +24,8 @@ class LibraryController(ControllerBase):
     @staticmethod
     def npm_installs() -> None:
         """Installed required Node packages (TailwindCSS, Flowbite, and AlpineJS) and creates a TailwindCSS output file."""
+        from ..conf.constants.poetry import TW_CMD
+
         subprocess.run(["npm", "install", "-D", *NPM_PACKAGES], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
         subprocess.run(["npx", *TW_CMD.split(' ')], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -48,22 +49,19 @@ class LibraryController(ControllerBase):
             except Exception as e:
                 print(f"Error: {e}")
 
-    @staticmethod
-    def get_flowbite() -> None:
+    def get_flowbite(self) -> None:
         """Copies Flowbite CSS and JS from `node_modules`."""
-        shutil.copy(AssetUrls.FLOWBITE_CSS, os.path.join(ProjectPaths.CSS, AssetFilenames.FLOWBITE_CSS))
-        shutil.copy(AssetUrls.FLOWBITE_JS, os.path.join(ProjectPaths.JS, AssetFilenames.FLOWBITE_JS))
+        shutil.copy(AssetUrls.FLOWBITE_CSS, os.path.join(self.project_paths.CSS, AssetFilenames.FLOWBITE_CSS))
+        shutil.copy(AssetUrls.FLOWBITE_JS, os.path.join(self.project_paths.JS, AssetFilenames.FLOWBITE_JS))
 
-    @staticmethod
-    def get_htmx() -> None:
+    def get_htmx(self) -> None:
         """Retrieves `HTMX` from the official downloads page."""
         with urllib.request.urlopen(AssetUrls.HTMX) as response:
             htmx_content = response.read().decode('utf-8')
         
-        with open(os.path.join(ProjectPaths.JS, AssetFilenames.HTMX), 'w') as file:
+        with open(os.path.join(self.project_paths.JS, AssetFilenames.HTMX), 'w') as file:
             file.write(htmx_content)
 
-    @staticmethod
-    def get_alpine() -> None:
+    def get_alpine(self) -> None:
         """Retrieves `AlpineJS` from `node_modules`."""
-        shutil.copy(AssetUrls.ALPINE, os.path.join(ProjectPaths.JS, AssetFilenames.ALPINE))
+        shutil.copy(AssetUrls.ALPINE, os.path.join(self.project_paths.JS, AssetFilenames.ALPINE))

@@ -1,4 +1,5 @@
 from ..conf.constants import PASS
+from ..conf.constants.filepaths import ProjectPaths
 
 from rich.progress import Progress
 
@@ -16,6 +17,7 @@ class ControllerBase:
     """
     def __init__(self, tasks: list[tuple]) -> None:
         self.tasks = tasks
+        self.project_paths = ProjectPaths()
 
     @staticmethod
     def update_desc(desc: str) -> str:
