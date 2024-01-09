@@ -1,3 +1,5 @@
+import textwrap
+
 from .base import ControllerBase
 from ..conf.constants.fastapi import FastAPIDirPaths, FastAPIContent
 from ..conf.constants.poetry import PoetryCommands, PoetryContent
@@ -42,5 +44,7 @@ class FastAPIFileController(ControllerBase):
 
     def create_build(self) -> None:
         """Creates a build file in the root directory for watching TailwindCSS."""
+        content = textwrap.dedent(self.poetry_content.BUILD_FILE_CONTENT)
+
         with open(self.project_paths.PROJECT_BUILD, 'w') as file:
-            file.write(self.poetry_content.BUILD_FILE_CONTENT)
+            file.write(content)
