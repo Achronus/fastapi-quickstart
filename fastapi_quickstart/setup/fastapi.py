@@ -1,7 +1,6 @@
 from .base import ControllerBase
 from ..conf.constants.fastapi import FastAPIDirPaths, FastAPIContent
-from ..conf.constants.filepaths import ProjectPaths
-from ..conf.constants.poetry import START_CMD_OLD, START_CMD_NEW, BUILD_FILE_CONTENT
+from ..conf.constants.poetry import PoetryCommands, PoetryContent
 from ..conf.file_handler import insert_into_file, replace_content
 from ..config import DATABASE_URL
 
@@ -17,8 +16,12 @@ class FastAPIFileController(ControllerBase):
 
         super().__init__(tasks)
 
-    @staticmethod
-    def check_db() -> None:
+        self.poetry_commands = PoetryCommands()
+        self.poetry_content = PoetryContent()
+
+        self.dir_paths = FastAPIDirPaths()
+
+    def check_db(self) -> None:
         """Checks that the correct database config is setup."""
         sqlite_db = DATABASE_URL.split(':')[0] == 'sqlite'
 
@@ -26,16 +29,18 @@ class FastAPIFileController(ControllerBase):
             insert_into_file(
                 FastAPIContent.SQLITE_DB_POSITION, 
                 FastAPIContent.SQLITE_DB_CONTENT, 
-                FastAPIDirPaths.DATABASE_INIT_FILE
+                self.dir_paths.DATABASE_INIT_FILE
             )
 
-    @staticmethod
-    def check_start_cmd() -> None:
+    def check_start_cmd(self) -> None:
         """Updates start server command."""
-        replace_content(START_CMD_OLD, START_CMD_NEW, ProjectPaths.PROJECT_MAIN)
+        replace_content(
+            self.poetry_content.START_CMD_OLD, 
+            self.poetry_content.START_CMD_NEW, 
+            self.project_paths.PROJECT_MAIN
+        )
 
-    @staticmethod
-    def create_build() -> None:
+    def create_build(self) -> None:
         """Creates a build file in the root directory for watching TailwindCSS."""
-        with open(ProjectPaths.PROJECT_BUILD, 'w') as file:
-            file.write(BUILD_FILE_CONTENT)
+        with open(self.project_paths.PROJECT_BUILD, 'w') as file:
+            file.write(self.poetry_content.BUILD_FILE_CONTENT)

@@ -2,7 +2,7 @@ import os
 import shutil
 
 from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, CORE_ENV_PARAMS
-from ..conf.constants.filepaths import AssetFilenames, ProjectPaths, SetupDirPaths
+from ..conf.constants.filepaths import AssetFilenames, SetupDirPaths
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
 
@@ -24,8 +24,7 @@ class StaticAssetsController(ControllerBase):
             for item in CORE_ENV_PARAMS + ENV_FILE_ADDITIONAL_PARAMS:
                 file.write(item)
 
-    @staticmethod
-    def move_setup_assets() -> None:
+    def move_setup_assets(self) -> None:
         """Moves the items in the `setup_assets` folder into the project directory."""
         static_exists = False
 
@@ -38,17 +37,17 @@ class StaticAssetsController(ControllerBase):
             # Check if static folder exists and matches desired name
             if os.path.exists(dir_path) and os.path.isdir(dir_name):
                 if dir_name != STATIC_DIR_NAME:
-                    os.rename(dir_path, ProjectPaths.STATIC)
+                    os.rename(dir_path, self.project_paths.STATIC)
                 static_exists = True
                 break
         
         # If static folder doesn't exist, make one
         if not static_exists:
             static_dirs = [
-                ProjectPaths.STATIC, 
-                ProjectPaths.CSS, 
-                ProjectPaths.JS, 
-                ProjectPaths.IMGS
+                self.project_paths.STATIC, 
+                self.project_paths.CSS, 
+                self.project_paths.JS, 
+                self.project_paths.IMGS
             ]
             for item in static_dirs:
                 os.mkdir(item)

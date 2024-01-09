@@ -14,8 +14,11 @@ class FastAPIFilenames:
 
 # FastAPI directory filepaths
 class FastAPIDirPaths:
-    DATABASE_DIR = os.path.join(ProjectPaths.PROJECT, FastAPIDirnames.DATABASE)
-    DATABASE_INIT_FILE = os.path.join(DATABASE_DIR, FastAPIFilenames.BASE)
+    def __init__(self) -> None:
+        project_paths = ProjectPaths()
+
+        self.DATABASE_DIR = os.path.join(project_paths.ROOT, FastAPIDirnames.DATABASE)
+        self.DATABASE_INIT_FILE = os.path.join(self.DATABASE_DIR, FastAPIFilenames.BASE)
 
 
 # Define extra content

@@ -2,7 +2,7 @@ import os
 import sys
 
 from ..helper import dirname_check
-from ...config import STATIC_FILES_DIR, VENV_NAME, DATABASE_URL
+from fastapi_quickstart.config import STATIC_FILES_DIR, VENV_NAME, DATABASE_URL
 
 
 # Change venv activation depending on OS
