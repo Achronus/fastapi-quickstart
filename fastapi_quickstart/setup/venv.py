@@ -3,7 +3,7 @@ import shutil
 import subprocess
 
 from ..conf.constants import VENV, VENV_NAME, CORE_PIP_PACKAGES
-from ..conf.constants.filepaths import AssetFilenames, get_project_name
+from ..conf.constants.filepaths import get_project_name
 from ..conf.constants.poetry import PoetryContent
 from ..conf.file_handler import insert_into_file
 from ..config import ADDITIONAL_PIP_PACKAGES
@@ -17,7 +17,6 @@ class VEnvController(ControllerBase):
             (self.create, "Building [yellow]venv[/yellow]"),
             (self.update_pip, "Updating [yellow]PIP[/yellow]"),
             (self.install, "Installing [yellow]PIP[/yellow] packages"),
-            (self.requirements, "Creating [magenta]requirements.txt[/magenta]"),
             (self.init_project, f"Initalising [cyan]{get_project_name()}[/cyan] as [green]Poetry[/green] project"),
             (self.add_dependencies, "Adding [yellow]PIP[/yellow] packages to [green]Poetry[/green]")
         ]
@@ -29,7 +28,7 @@ class VEnvController(ControllerBase):
     @staticmethod
     def create() -> None:
         """Creates a new virtual environment."""
-        subprocess.run(["python", "-m", "venv", VENV_NAME])
+        subprocess.run(["python", "-m", "venv", VENV_NAME], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     @staticmethod
     def update_pip() -> None:
@@ -40,12 +39,6 @@ class VEnvController(ControllerBase):
     def install() -> None:
         """Installs a set of `PIP` packages."""
         subprocess.run([os.path.join(VENV, "pip"), "install", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-    @staticmethod
-    def requirements() -> None:
-        """Creates a `requirements.txt` file."""
-        with open(AssetFilenames.REQUIREMENTS, "w") as file:
-            subprocess.Popen([os.path.join(VENV, "pip"), "freeze"], stdout=file)
 
     def init_project(self) -> None:
         """Creates a poetry project."""
