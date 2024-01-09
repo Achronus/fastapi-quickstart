@@ -5,6 +5,7 @@ import urllib.request
 
 from ..conf.constants import NPM_PACKAGES
 from ..conf.constants.filepaths import AssetFilenames, AssetUrls
+from ..conf.constants.poetry import PoetryCommands
 from .base import ControllerBase
 
 
@@ -20,15 +21,14 @@ class LibraryController(ControllerBase):
         ]
 
         super().__init__(tasks)
-        
-    @staticmethod
-    def npm_installs() -> None:
-        """Installed required Node packages (TailwindCSS, Flowbite, and AlpineJS) and creates a TailwindCSS output file."""
-        from ..conf.constants.poetry import TW_CMD
 
+        self.poetry_commands = PoetryCommands()
+        
+    def npm_installs(self) -> None:
+        """Installed required Node packages (TailwindCSS, Flowbite, and AlpineJS) and creates a TailwindCSS output file."""
         subprocess.run(["npm", "install", "-D", *NPM_PACKAGES], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
-        subprocess.run(["npx", *TW_CMD.split(' ')], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(["npx", *self.poetry_commands.TW_CMD.split(' ')], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     @staticmethod
     def get_tw_standalone() -> None:
