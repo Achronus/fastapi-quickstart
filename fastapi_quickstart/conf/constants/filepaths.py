@@ -68,16 +68,15 @@ def get_project_name() -> str:
 class ProjectPaths:
     def __init__(self) -> None:
         self.PROJECT_NAME = get_project_name()
-
         self.ROOT = os.path.join(os.path.dirname(os.getcwd()), self.PROJECT_NAME)
-        self.PROJECT = os.path.join(self.ROOT, self.PROJECT_NAME)
 
+        self.PROJECT = os.path.join(self.ROOT, self.PROJECT_NAME)
         self.INIT_POETRY_CONF = os.path.join(self.PROJECT, AssetFilenames.POETRY_CONF)
         self.INIT_README = os.path.join(self.PROJECT, AssetFilenames.README)
         
         self.POETRY_CONF = os.path.join(self.ROOT, AssetFilenames.POETRY_CONF)
-        self.PROJECT_MAIN = os.path.join(self.PROJECT, AssetFilenames.MAIN)
-        self.PROJECT_BUILD = os.path.join(self.PROJECT, AssetFilenames.BUILD)
+        self.PROJECT_MAIN = os.path.join(self.ROOT, AssetFilenames.MAIN)
+        self.PROJECT_BUILD = os.path.join(self.ROOT, AssetFilenames.BUILD)
 
         self.STATIC = os.path.join(self.ROOT, STATIC_DIR_NAME)
         self.CSS = os.path.join(self.STATIC, SetupAssetsDirNames.CSS)
