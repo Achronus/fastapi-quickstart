@@ -84,9 +84,10 @@ Simply, enter the new project folder:
 cd ../my_project
 ```
 
-Access the poetry shell:
+Access the poetry shell and install the project:
 ```bash
 poetry shell
+poetry install
 ```
 
 Run the server in one terminal and open `localhost:8000/docs` (or `127.0.0.1:8000/docs`) in your browser:
