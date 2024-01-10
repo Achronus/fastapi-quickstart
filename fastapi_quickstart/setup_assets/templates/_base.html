@@ -1,6 +1,3 @@
-{% load compress %}
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,15 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Homepage{% endblock title %}</title>
 
-    {% compress css %}
-    <link id="tw-css" rel="stylesheet" href="{% static 'css/output.css' %}">
-    {% endcompress %}
+    <link id="tw-css" rel="stylesheet" href="{{ url_for('static', path='css/output.css') }}">
+    <link id="fb-css" rel="stylesheet" href="{{ url_for('static', path='css/flowbite.min.css') }}" />
 
-    <link id="fb-css" rel="stylesheet" href="{% static 'css/flowbite.min.css' %}" />
-
-    <script id="theme-toggle-js" src="{% static 'js/theme-toggle.js' %}" defer></script>
-    <script id="htmx-js" src="{% static 'js/htmx.min.js' %}" defer></script>
-    <script id="alpine-js" src="{% static 'js/alpine.min.js' %}" defer></script>
+    <script id="theme-toggle-js" src="{{ url_for('static', path='js/theme-toggle.js') }}" defer></script>
+    <script id="htmx-js" src="{{ url_for('static', path='js/htmx.min.js') }}" defer></script>
+    <script id="alpine-js" src="{{ url_for('static', path='js/alpine.min.js') }}" defer></script>
 
 </head>
 
@@ -29,7 +23,7 @@
         {% endblock content %}
     </div>
 
-    <script id="flowbite-js" src="{% static 'js/flowbite.min.js' %}"></script>
+    <script id="flowbite-js" src="{{ url_for('static', path='js/flowbite.min.js') }}"></script>
 </body>
 
 </html>

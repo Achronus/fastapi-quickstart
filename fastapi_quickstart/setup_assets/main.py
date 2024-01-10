@@ -1,15 +1,25 @@
+import os
+from pathlib import Path
+
 import uvicorn
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from .database import SessionLocal, engine, crud, schemas
 from .database.models import Base
 
 
+PROJECT_DIR = os.path.basename(Path(__file__).resolve().parent)
+
 # Create DB tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory=os.path.join(PROJECT_DIR, "assets")), name="static")
+templates = Jinja2Templates(directory=os.path.join(PROJECT_DIR, "templates"))
 
 
 # Dependency
@@ -19,6 +29,11 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse(request=request, name='index.html', context={})
 
 
 @app.post("/users/", response_model=schemas.User)
@@ -58,4 +73,4 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 def start() -> None:
     """Start the server."""
-    uvicorn.run("main:app", reload=True)
+    uvicorn.run(f"{PROJECT_DIR}.main:app", port=8000, reload=True)
