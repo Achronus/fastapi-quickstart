@@ -27,10 +27,6 @@ class PoetryContent:
             f'watch = "{self.commands.WATCH_POETRY_CMD}"'
         ])
 
-        self.START_CMD_OLD = 'uvicorn.run("main:app"'
-        self.START_CMD_NEW = f'uvicorn.run("{self.project_name}.main:app"'
-
-
         self.BUILD_FILE_CONTENT = f"""
         import os
         import subprocess
