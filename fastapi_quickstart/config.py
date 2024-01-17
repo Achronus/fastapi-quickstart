@@ -1,10 +1,3 @@
-# Select a static files directory name
-# Options: ['static', 'public', 'assets']
-STATIC_FILES_DIR = "assets"  
-
-# Configure virtual environment name
-VENV_NAME = 'env'
-
 # Define your database URL
 DATABASE_URL = 'sqlite:///./database.db'
 # DATABASE_URL = "postgresql://user:password@postgresserver/db"

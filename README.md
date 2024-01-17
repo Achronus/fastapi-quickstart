@@ -12,8 +12,10 @@ The default pip packages installed include:
 
 - `fastapi`
 - `uvicorn[standard]`
+- `sqlalchemy`
 - `jinja2`
 - `python-dotenv`
+- `poetry`
 
 _Note: all libraries and packages are automatically installed to their latest versions when running the tool._
 
@@ -25,14 +27,13 @@ The tool does the following:
 
 - Creates a virtual environment in the project folder
 - Accesses it, updates `PIP` and installs the required packages
-- Generates a `requirements.txt` file
 - Creates a `.env` file
-- Creates an `api` directory with a basic application template for `FastAPI`
-- Creates a `template` directory with some basic `Jinja2` template files
+- Creates a `backend` directory with a basic application template for `FastAPI`
+- Creates a `frontend` directory with some basic `Jinja2` template files
   - Such as a `_base.html` and `index.html`
-- Creates a `static` files directory for storing `css`, `js`, and `img` files locally (name can be set in `config.py` as either `static`, `public`, or `assets`)
+- Creates a `frontend/public` files directory for storing `css`, `js`, and `img` files locally
   - Adds `TailwindCSS`, `Flowbite`, `HTMX`, and `AlpineJS` static files
-
+- Performs some file cleanup such as removing `node_modules` (if your OS supports TailwindCSS standalone CLI), `venv` and `package.json` files
 
 ## Dependencies
 
@@ -45,12 +46,17 @@ Fortunately, `Tailwind` has a [Standalone CLI](https://tailwindcss.com/blog/stan
 
 ### Customisation and Configuration
 
-By default, you can add whatever files you want to the tool as long as they are stored in the `setup_assets` folder. Feel free to explore the default one that comes pre-configured with the tool. Here a few things to note:
+All files added to the project are stored in `setup_assets`. If you want add files, feel free but it is recommended not to mess with the file structure. Here a few things to note:
 - All the files are added to the `project` root directory
-- Static files **MUST** be stored in a `setup_assets/static` folder
-- The static folder name is changed dynamically based on the `config.py` `STATIC_FILES_DIR` variable
+- Static files **MUST** be stored in a `setup_assets/frontend/static` folder
+- The static folder name is changed dynamically during project creation from `frontend/static` -> `frontend/public`
 
-There are a few other configurable options in `config.py`, such as `PIP_PACKAGES` and additional `.env` parameters that you can setup too.
+For configuration customisation go to `config.py` in the root directory. Here you have three options:
+- Changing the database URL -> `DATABASE_URL`, defaults to a SQLite local database.
+- Adding additional PIP packages to the project -> `ADDITIONAL_PIP_PACKAGES`
+- Adding additional `.env` file variables -> `ENV_FILE_ADDITIONAL_PARAMS`
+
+Note: the last two options are treated as python `list` objects that accept `strings` only.
 
 
 ### Creation
@@ -58,49 +64,43 @@ There are a few other configurable options in `config.py`, such as `PIP_PACKAGES
 
 ```bash
 git clone https://github.com/Achronus/fastapi-quickstart.git
-```
-
-```bash
 cd fastapi-quickstart
-```
-
-```bash
 poetry shell
-```
-
-```bash
-create my_project
+create my_project  # Replace me with custom name!
 ```
 
 For example, if you have a parent folder called `projects` and are making a project called `todo_app` the project is created in `projects/todo_app` instead of `projects/fastapi-quickstart/todo_app`.
 
 
 ### And That's It!
-Everything is setup with a blank template ready to start building a project from scratch.
 
-Simply, enter the new project folder:
+Everything is setup with a blank template ready to start building a project from scratch. Run the following commands to run the docker `development` server and watch `TailwindCSS` locally!
+
+Not got Docker? Follow these instructions from the [Docker website](https://docs.docker.com/get-docker/).
+
 
 ```bash
-cd ../my_project
-```
+cd ../my_project  # Replace me with custom name!
+docker-compose up -d --build dev
 
-Access the poetry shell and install the project:
-```bash
 poetry shell
 poetry install
-```
 
-Run the server in one terminal and open `localhost:8000/docs` (or `127.0.0.1:8000/docs`) in your browser:
-
-```bash
-run
-```
-
-And watch `TailwindCSS` in another (remember to be in a `poetry shell`!):
-
-```bash
 watch
 ```
+
+Then access the site at [localhost:8080](http://localhost:8080).
+
+
+### Production
+
+Docker also comes configured with a production variant. Inside the `my_project` folder run:
+```bash
+docker-compose up -d --build prod
+```
+
+Then you are good to go!
+
 
 ## Folder Structure
 
@@ -108,29 +108,34 @@ The newly created project should look similar to the following:
 
 ```bash
 project_name
+└── config
+|   └── docker
+|   |   └── Dockerfile.backend
 └── project_name
-|   └── assets
-|   |   └── css
-|   |      └── flowbite.min.css
-|   |      └── input.css
-|   |      └── output.css
-|   |   └── imgs
-|   |   |   └── avatar.svg
-|   |   └── js
-|   |      └── alpine.min.js
-|   |      └── flowbite.min.js
-|   |      └── htmx.min.js
-|   |      └── theme-toggle.js
-|   └── database
-|   |   └── __init__.py
-|   |   └── crud.py
-|   |   └── models.py
-|   |   └── schemas.py
-|   └── templates
-|   |   └── components
-|   |   |   └── navbar.html
-|   |   └── _base.html
-|   |   └── index.html
+|   └── backend
+|   |   └── database
+|   |       └── __init__.py
+|   |       └── crud.py
+|   |       └── models.py
+|   |       └── schemas.py
+|   └── frontend
+|   |   └── public
+|   |   |   └── css
+|   |   |   |   └── flowbite.min.css
+|   |   |   |   └── input.css
+|   |   |   |   └── style.min.css
+|   |   |   └── imgs
+|   |   |   |   └── avatar.svg
+|   |   |   └── js
+|   |   |       └── alpine.min.js
+|   |   |       └── flowbite.min.js
+|   |   |       └── htmx.min.js
+|   |   |       └── theme-toggle.js
+|   |   └── templates
+|   |       └── components
+|   |       |   └── navbar.html
+|   |       └── _base.html
+|   |       └── index.html
 |   └── tests
 |   |   └── __init__.py
 |   └── .env
@@ -138,10 +143,12 @@ project_name
 |   └── build.py
 |   └── main.py
 |   └── tailwind.config.js
-|   └── tailwindcss
+|   └── tailwindcss OR tailwindcss.exe
+└── .dockerignore
+└── database.db
+└── docker-compose.base.yml
+└── docker-compose.yml
 └── poetry.lock
 └── pyproject.toml
 └── README.md
-└── requirements.txt
-└── database.db
 ```

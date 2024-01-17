@@ -7,9 +7,15 @@ from ..helper import set_tw_standalone_filename
 # Setup assets directory names
 class SetupAssetsDirNames:
     ROOT = 'setup_assets'
+    FRONTEND = 'frontend'
+    BACKEND = 'backend'
+
     CSS = 'css'
     JS = 'js'
     IMGS = 'imgs'
+
+    CONFIG = 'config'
+    DOCKERFILES = 'docker'
 
 
 # Asset filenames
@@ -42,7 +48,7 @@ class AssetUrls:
 
 # Static folder directory names
 class StaticDirNames:
-    ROOT = os.path.join(os.getcwd(), STATIC_DIR_NAME)
+    ROOT = os.path.join(os.getcwd(), STATIC_DIR_NAME, SetupAssetsDirNames.FRONTEND)
     CSS = os.path.join(ROOT, SetupAssetsDirNames.CSS)
     JS = os.path.join(ROOT, SetupAssetsDirNames.JS)
     IMGS = os.path.join(ROOT, SetupAssetsDirNames.IMGS)
@@ -69,6 +75,8 @@ class ProjectPaths:
     def __init__(self) -> None:
         self.PROJECT_NAME = get_project_name()
         self.ROOT = os.path.join(os.path.dirname(os.getcwd()), self.PROJECT_NAME)
+        self.BACKEND = os.path.join(self.ROOT, SetupAssetsDirNames.BACKEND)
+        self.FRONTEND = os.path.join(self.ROOT, SetupAssetsDirNames.FRONTEND)
 
         self.PROJECT = os.path.join(self.ROOT, self.PROJECT_NAME)
         self.INIT_POETRY_CONF = os.path.join(self.PROJECT, AssetFilenames.POETRY_CONF)
@@ -78,7 +86,25 @@ class ProjectPaths:
         self.PROJECT_MAIN = os.path.join(self.ROOT, AssetFilenames.MAIN)
         self.PROJECT_BUILD = os.path.join(self.ROOT, AssetFilenames.BUILD)
 
-        self.STATIC = os.path.join(self.ROOT, STATIC_DIR_NAME)
+        self.STATIC = os.path.join(self.ROOT, SetupAssetsDirNames.FRONTEND, STATIC_DIR_NAME)
         self.CSS = os.path.join(self.STATIC, SetupAssetsDirNames.CSS)
         self.JS = os.path.join(self.STATIC, SetupAssetsDirNames.JS)
         self.IMGS = os.path.join(self.STATIC, SetupAssetsDirNames.IMGS)
+
+
+# Dockerfile specific directory and filename filepaths
+class DockerPaths:
+    def __init__(self) -> None:
+        self.df = 'Dockerfile'
+        self.compose = 'docker-compose'
+
+        self._yml_ext = '.yml'
+        self._project_root = os.path.dirname(os.getcwd())
+
+        self.ROOT_DIR = os.path.join(self._project_root, SetupAssetsDirNames.CONFIG, SetupAssetsDirNames.DOCKERFILES)
+
+        self.BACKEND_DF = os.path.join(self.ROOT_DIR, f'{self.df}.backend')
+        self.IGNORE = os.path.join(self._project_root, '.dockerignore')
+        
+        self.COMPOSE_BASE = os.path.join(self._project_root, f"{self.compose}.base{self._yml_ext}")
+        self.COMPOSE_MAIN = os.path.join(self._project_root, f"{self.compose}{self._yml_ext}")
