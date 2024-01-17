@@ -2,6 +2,7 @@ import os
 import shutil
 
 from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, CORE_ENV_PARAMS
+from ..conf.constants.docker import DockerContent
 from ..conf.constants.filepaths import AssetFilenames, SetupDirPaths, SetupAssetsDirNames
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
@@ -20,6 +21,11 @@ class StaticAssetsController(ControllerBase):
     @staticmethod
     def create_dotenv() -> None:
         """Creates a `.env` file and adds items to it."""
+        docker_content = DockerContent()
+
+        with open(AssetFilenames.ENV, "w") as file:
+            file.write(docker_content.env_config())
+
         with open(AssetFilenames.ENV, "a") as file:
             for item in CORE_ENV_PARAMS + ENV_FILE_ADDITIONAL_PARAMS:
                 file.write(item)

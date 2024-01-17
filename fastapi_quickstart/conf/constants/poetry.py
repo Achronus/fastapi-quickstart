@@ -25,7 +25,7 @@ class PoetryContent:
         self.SCRIPT_INSERT_LOC = 'readme = "README.md"'
         self.SCRIPT_CONTENT = '\n'.join([
             "[tool.poetry.scripts]",
-            f'dev = "{self.commands.START_SERVER_CMD}"',
+            f'run = "{self.commands.START_SERVER_CMD}"',
             f'watch = "{self.commands.WATCH_POETRY_CMD}"'
         ])
 
