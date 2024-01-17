@@ -112,16 +112,16 @@ project_name
 |   └── frontend
 |   |   └── public
 |   |   |   └── css
-|   |   |      └── flowbite.min.css
-|   |   |      └── input.css
-|   |   |      └── style.min.css
+|   |   |   |   └── flowbite.min.css
+|   |   |   |   └── input.css
+|   |   |   |   └── style.min.css
 |   |   |   └── imgs
 |   |   |   |   └── avatar.svg
 |   |   |   └── js
-|   |   |      └── alpine.min.js
-|   |   |      └── flowbite.min.js
-|   |   |      └── htmx.min.js
-|   |   |      └── theme-toggle.js
+|   |   |       └── alpine.min.js
+|   |   |       └── flowbite.min.js
+|   |   |       └── htmx.min.js
+|   |   |       └── theme-toggle.js
 |   |   └── templates
 |   |   |   └── components
 |   |   |   |   └── navbar.html
