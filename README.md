@@ -92,10 +92,12 @@ Then access the site at [localhost:8080](http://localhost:8080).
 
 ### Production
 
-Docker also comes configured with a production variant. Firstly, access the `.env` file and change `ENVIRONMENT=dev` to `ENVIRONMENT=prod`. Then, inside the `my_project` folder run:
+Docker also comes configured with a production variant. Inside the `my_project` folder run:
 ```bash
 docker-compose up -d --build prod
 ```
+
+Then you are good to go!
 
 
 ## Folder Structure
