@@ -108,6 +108,9 @@ The newly created project should look similar to the following:
 
 ```bash
 project_name
+└── config
+|   └── docker
+|   |   └── Dockerfile.backend
 └── project_name
 |   └── backend
 |   |   └── database
@@ -141,8 +144,11 @@ project_name
 |   └── main.py
 |   └── tailwind.config.js
 |   └── tailwindcss OR tailwindcss.exe
+└── .dockerignore
+└── database.db
+└── docker-compose.base.yml
+└── docker-compose.yml
 └── poetry.lock
 └── pyproject.toml
 └── README.md
-└── database.db
 ```
