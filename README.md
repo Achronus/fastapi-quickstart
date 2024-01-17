@@ -12,8 +12,10 @@ The default pip packages installed include:
 
 - `fastapi`
 - `uvicorn[standard]`
+- `sqlalchemy`
 - `jinja2`
 - `python-dotenv`
+- `poetry`
 
 _Note: all libraries and packages are automatically installed to their latest versions when running the tool._
 
