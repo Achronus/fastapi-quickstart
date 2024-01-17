@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from .conf.constants import STATIC_DIR_NAME
+
 from .conf.constants.filepaths import set_project_name
 from .conf.helper import set_tw_standalone_filename
 from .setup import run_tasks
@@ -56,9 +56,6 @@ def main(name: Annotated[str, typer.Argument(help="The name of the project", sho
     # Provide information for unsupported TailwindCSS standalone CLI
     if set_tw_standalone_filename() == 'unsupported':
         console.print('\nOS not supported for standalone TailwindCSS. [magenta]node_modules[/magenta] kept.')
-        console.print('Please run Tailwind through [green]npx[/green] instead:')
-        console.print(f'  [dark_goldenrod]npx tailwindcss -i ./{STATIC_DIR_NAME}/assets/input.css -o ./{STATIC_DIR_NAME}/assets/output.css --watch --minify[/dark_goldenrod]')
-
 
 if __name__ == '__main__':
     app()

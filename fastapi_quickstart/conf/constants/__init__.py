@@ -2,10 +2,11 @@ import os
 import sys
 
 from ..helper import dirname_check
-from fastapi_quickstart.config import STATIC_FILES_DIR, VENV_NAME, DATABASE_URL
+from fastapi_quickstart.config import DATABASE_URL
 
 
 # Change venv activation depending on OS
+VENV_NAME = 'env'
 VENV_LOCATION = os.path.join(os.getcwd(), VENV_NAME)
 
 if sys.platform.startswith("win"):
@@ -43,6 +44,7 @@ PARTY = ':party_popper:'
 # Set default static directory name
 VALID_STATIC_DIR_NAMES =  ['static', 'public', 'assets']
 
+STATIC_FILES_DIR = 'public'
 STATIC_DIR_NAME = dirname_check(
     VALID_STATIC_DIR_NAMES, 
     STATIC_FILES_DIR,

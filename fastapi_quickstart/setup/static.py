@@ -2,7 +2,7 @@ import os
 import shutil
 
 from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, CORE_ENV_PARAMS
-from ..conf.constants.filepaths import AssetFilenames, SetupDirPaths
+from ..conf.constants.filepaths import AssetFilenames, SetupDirPaths, SetupAssetsDirNames
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
 
@@ -32,15 +32,15 @@ class StaticAssetsController(ControllerBase):
         shutil.copytree(SetupDirPaths.ASSETS, os.getcwd(), dirs_exist_ok=True)
 
         for dir_name in VALID_STATIC_DIR_NAMES:
-            dir_path = os.path.join(os.getcwd(), dir_name)
+            dir_path = os.path.join(os.getcwd(), SetupAssetsDirNames.FRONTEND, dir_name)
 
             # Check if static folder exists and matches desired name
-            if os.path.exists(dir_path) and os.path.isdir(dir_name):
+            if os.path.exists(dir_path):
                 if dir_name != STATIC_DIR_NAME:
                     os.rename(dir_path, self.project_paths.STATIC)
                 static_exists = True
                 break
-        
+
         # If static folder doesn't exist, make one
         if not static_exists:
             static_dirs = [

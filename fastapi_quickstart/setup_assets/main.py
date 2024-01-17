@@ -8,18 +8,19 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
-from .database import SessionLocal, engine, crud, schemas
-from .database.models import Base
+from .backend.database import SessionLocal, engine, crud, schemas
+from .backend.database.models import Base
 
 
 PROJECT_DIR = os.path.basename(Path(__file__).resolve().parent)
+FRONTEND_DIR = os.path.join(PROJECT_DIR, 'frontend')
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory=os.path.join(PROJECT_DIR, "assets")), name="static")
-templates = Jinja2Templates(directory=os.path.join(PROJECT_DIR, "templates"))
+app.mount("/static", StaticFiles(directory=os.path.join(FRONTEND_DIR, 'public')), name="static")
+templates = Jinja2Templates(directory=os.path.join(FRONTEND_DIR, "templates"))
 
 
 # Dependency
@@ -73,4 +74,4 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 def start() -> None:
     """Start the server."""
-    uvicorn.run(f"{PROJECT_DIR}.main:app", port=8000, reload=True)
+    uvicorn.run(f"{PROJECT_DIR}.main:app", host="0.0.0.0", port=8080, reload=True)

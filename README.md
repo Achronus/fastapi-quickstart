@@ -45,12 +45,17 @@ Fortunately, `Tailwind` has a [Standalone CLI](https://tailwindcss.com/blog/stan
 
 ### Customisation and Configuration
 
-By default, you can add whatever files you want to the tool as long as they are stored in the `setup_assets` folder. Feel free to explore the default one that comes pre-configured with the tool. Here a few things to note:
+All files added to the project are stored in `setup_assets`. If you want add files, feel free but it is recommended not to mess with the file structure. Here a few things to note:
 - All the files are added to the `project` root directory
-- Static files **MUST** be stored in a `setup_assets/static` folder
-- The static folder name is changed dynamically based on the `config.py` `STATIC_FILES_DIR` variable
+- Static files **MUST** be stored in a `setup_assets/frontend/static` folder
+- The static folder name is changed dynamically during project creation from `frontend/static` -> `frontend/public`
 
-There are a few other configurable options in `config.py`, such as `PIP_PACKAGES` and additional `.env` parameters that you can setup too.
+For configuration customisation go to `config.py` in the root directory. Here you have three options:
+- Changing the database URL -> `DATABASE_URL`, defaults to a SQLite local database.
+- Adding additional PIP packages to the project -> `ADDITIONAL_PIP_PACKAGES`
+- Adding additional `.env` file variables -> `ENV_FILE_ADDITIONAL_PARAMS`
+
+Note: the last two options are treated as python `list` objects that accept `strings` only.
 
 
 ### Creation
@@ -93,7 +98,7 @@ poetry install
 Run the server in one terminal and open `localhost:8000/docs` (or `127.0.0.1:8000/docs`) in your browser:
 
 ```bash
-run
+dev
 ```
 
 And watch `TailwindCSS` in another (remember to be in a `poetry shell`!):
@@ -109,28 +114,30 @@ The newly created project should look similar to the following:
 ```bash
 project_name
 └── project_name
-|   └── assets
-|   |   └── css
-|   |      └── flowbite.min.css
-|   |      └── input.css
-|   |      └── output.css
-|   |   └── imgs
-|   |   |   └── avatar.svg
-|   |   └── js
-|   |      └── alpine.min.js
-|   |      └── flowbite.min.js
-|   |      └── htmx.min.js
-|   |      └── theme-toggle.js
-|   └── database
-|   |   └── __init__.py
-|   |   └── crud.py
-|   |   └── models.py
-|   |   └── schemas.py
-|   └── templates
-|   |   └── components
-|   |   |   └── navbar.html
-|   |   └── _base.html
-|   |   └── index.html
+|   └── frontend
+|   |   └── public
+|   |   |   └── css
+|   |   |      └── flowbite.min.css
+|   |   |      └── input.css
+|   |   |      └── output.css
+|   |   |   └── imgs
+|   |   |   |   └── avatar.svg
+|   |   |   └── js
+|   |   |      └── alpine.min.js
+|   |   |      └── flowbite.min.js
+|   |   |      └── htmx.min.js
+|   |   |      └── theme-toggle.js
+|   |   └── templates
+|   |   |   └── components
+|   |   |   |   └── navbar.html
+|   |   |   └── _base.html
+|   |   |   └── index.html
+|   └── backend
+|   |   └── database
+|   |   |   └── __init__.py
+|   |   |   └── crud.py
+|   |   |   └── models.py
+|   |   |   └── schemas.py
 |   └── tests
 |   |   └── __init__.py
 |   └── .env
@@ -138,10 +145,9 @@ project_name
 |   └── build.py
 |   └── main.py
 |   └── tailwind.config.js
-|   └── tailwindcss
+|   └── tailwindcss OR tailwindcss.exe
 └── poetry.lock
 └── pyproject.toml
 └── README.md
-└── requirements.txt
 └── database.db
 ```
