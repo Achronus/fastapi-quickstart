@@ -62,49 +62,41 @@ Note: the last two options are treated as python `list` objects that accept `str
 
 ```bash
 git clone https://github.com/Achronus/fastapi-quickstart.git
-```
-
-```bash
 cd fastapi-quickstart
-```
-
-```bash
 poetry shell
-```
-
-```bash
-create my_project
+create my_project  # Replace me with custom name!
 ```
 
 For example, if you have a parent folder called `projects` and are making a project called `todo_app` the project is created in `projects/todo_app` instead of `projects/fastapi-quickstart/todo_app`.
 
 
 ### And That's It!
-Everything is setup with a blank template ready to start building a project from scratch.
 
-Simply, enter the new project folder:
+Everything is setup with a blank template ready to start building a project from scratch. Run the following commands to run the docker `development` server and watch `TailwindCSS` locally!
+
+Not got Docker? Follow these instructions from the [Docker website](https://docs.docker.com/get-docker/).
+
 
 ```bash
-cd ../my_project
-```
+cd ../my_project  # Replace me with custom name!
+docker-compose up -d --build dev
 
-Access the poetry shell and install the project:
-```bash
 poetry shell
 poetry install
-```
 
-Run the server in one terminal and open `localhost:8000/docs` (or `127.0.0.1:8000/docs`) in your browser:
-
-```bash
-dev
-```
-
-And watch `TailwindCSS` in another (remember to be in a `poetry shell`!):
-
-```bash
 watch
 ```
+
+Then access the site at [localhost:8080](http://localhost:8080).
+
+
+### Production
+
+Docker also comes configured with a production variant. Firstly, access the `.env` file and change `ENVIRONMENT=dev` to `ENVIRONMENT=prod`. Then, inside the `my_project` folder run:
+```bash
+docker-compose up -d --build prod
+```
+
 
 ## Folder Structure
 
@@ -118,7 +110,7 @@ project_name
 |   |   |   └── css
 |   |   |      └── flowbite.min.css
 |   |   |      └── input.css
-|   |   |      └── output.css
+|   |   |      └── style.min.css
 |   |   |   └── imgs
 |   |   |   |   └── avatar.svg
 |   |   |   └── js
