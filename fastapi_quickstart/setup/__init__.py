@@ -2,6 +2,7 @@ from .venv import VEnvController
 from .static import StaticAssetsController
 from .libraries import LibraryController
 from .fastapi import FastAPIFileController
+from .docker import DockerFileController
 from .clean import CleanupController
 from ..conf.constants import PASS
 
@@ -14,6 +15,7 @@ TASKS = [
     (StaticAssetsController, "Creating static assets..."),
     (LibraryController, "Installing libraries..."),
     (FastAPIFileController, "Checking FastAPI assets..."),
+    (DockerFileController, "Creating Dockerfiles..."),
     (CleanupController, "Cleaning project...")
 ]
 

@@ -109,6 +109,12 @@ The newly created project should look similar to the following:
 ```bash
 project_name
 └── project_name
+|   └── backend
+|   |   └── database
+|   |       └── __init__.py
+|   |       └── crud.py
+|   |       └── models.py
+|   |       └── schemas.py
 |   └── frontend
 |   |   └── public
 |   |   |   └── css
@@ -127,12 +133,6 @@ project_name
 |   |       |   └── navbar.html
 |   |       └── _base.html
 |   |       └── index.html
-|   └── backend
-|   |   └── database
-|   |       └── __init__.py
-|   |       └── crud.py
-|   |       └── models.py
-|   |       └── schemas.py
 |   └── tests
 |   |   └── __init__.py
 |   └── .env

@@ -14,6 +14,9 @@ class SetupAssetsDirNames:
     JS = 'js'
     IMGS = 'imgs'
 
+    CONFIG = 'config'
+    DOCKERFILES = 'docker'
+
 
 # Asset filenames
 class AssetFilenames:
@@ -87,3 +90,21 @@ class ProjectPaths:
         self.CSS = os.path.join(self.STATIC, SetupAssetsDirNames.CSS)
         self.JS = os.path.join(self.STATIC, SetupAssetsDirNames.JS)
         self.IMGS = os.path.join(self.STATIC, SetupAssetsDirNames.IMGS)
+
+
+# Dockerfile specific directory and filename filepaths
+class DockerPaths:
+    def __init__(self) -> None:
+        self.df = 'Dockerfile'
+        self.compose = 'docker-compose'
+
+        self._yml_ext = '.yml'
+        self._project_root = os.path.dirname(os.getcwd())
+
+        self.ROOT_DIR = os.path.join(self._project_root, SetupAssetsDirNames.CONFIG, SetupAssetsDirNames.DOCKERFILES)
+
+        self.BACKEND_DF = os.path.join(self.ROOT_DIR, f'{self.df}.backend')
+        self.IGNORE = os.path.join(self._project_root, '.dockerignore')
+        
+        self.COMPOSE_BASE = os.path.join(self._project_root, f"{self.compose}.base{self._yml_ext}")
+        self.COMPOSE_MAIN = os.path.join(self._project_root, f"{self.compose}{self._yml_ext}")

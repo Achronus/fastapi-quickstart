@@ -22,11 +22,12 @@ class StaticAssetsController(ControllerBase):
     def create_dotenv() -> None:
         """Creates a `.env` file and adds items to it."""
         docker_content = DockerContent()
+        path = os.path.join(os.path.dirname(os.getcwd()), AssetFilenames.ENV)
 
-        with open(AssetFilenames.ENV, "w") as file:
+        with open(path, "w") as file:
             file.write(docker_content.env_config())
 
-        with open(AssetFilenames.ENV, "a") as file:
+        with open(path, "a") as file:
             for item in CORE_ENV_PARAMS + ENV_FILE_ADDITIONAL_PARAMS:
                 file.write(item)
 
