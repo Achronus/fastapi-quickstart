@@ -25,14 +25,13 @@ The tool does the following:
 
 - Creates a virtual environment in the project folder
 - Accesses it, updates `PIP` and installs the required packages
-- Generates a `requirements.txt` file
 - Creates a `.env` file
-- Creates an `api` directory with a basic application template for `FastAPI`
-- Creates a `template` directory with some basic `Jinja2` template files
+- Creates a `backend` directory with a basic application template for `FastAPI`
+- Creates a `frontend` directory with some basic `Jinja2` template files
   - Such as a `_base.html` and `index.html`
-- Creates a `static` files directory for storing `css`, `js`, and `img` files locally (name can be set in `config.py` as either `static`, `public`, or `assets`)
+- Creates a `frontend/public` files directory for storing `css`, `js`, and `img` files locally
   - Adds `TailwindCSS`, `Flowbite`, `HTMX`, and `AlpineJS` static files
-
+- Performs some file cleanup such as removing `node_modules` (if your OS supports TailwindCSS standalone CLI), `venv` and `package.json` files
 
 ## Dependencies
 
