@@ -3,6 +3,7 @@ import shutil
 import subprocess
 
 from ..conf.helper import tw_executable_exists
+from ..conf.constants import VENV_NAME
 from .base import ControllerBase
 
 
@@ -31,7 +32,7 @@ class CleanupController(ControllerBase):
 
     def delete_venv(self) -> None:
         """Deletes the virtual environment folder and assets."""
-        shutil.rmtree(os.path.join(os.path.dirname(self.project_paths.ROOT), 'env'))
+        shutil.rmtree(os.path.join(os.path.dirname(self.project_paths.ROOT), VENV_NAME))
 
     def remove_files(self) -> None:
         """Removes redundant files."""
