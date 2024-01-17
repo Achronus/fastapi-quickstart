@@ -123,16 +123,16 @@ project_name
 |   |   |       └── htmx.min.js
 |   |   |       └── theme-toggle.js
 |   |   └── templates
-|   |   |   └── components
-|   |   |   |   └── navbar.html
-|   |   |   └── _base.html
-|   |   |   └── index.html
+|   |       └── components
+|   |       |   └── navbar.html
+|   |       └── _base.html
+|   |       └── index.html
 |   └── backend
 |   |   └── database
-|   |   |   └── __init__.py
-|   |   |   └── crud.py
-|   |   |   └── models.py
-|   |   |   └── schemas.py
+|   |       └── __init__.py
+|   |       └── crud.py
+|   |       └── models.py
+|   |       └── schemas.py
 |   └── tests
 |   |   └── __init__.py
 |   └── .env
