@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException, Request
@@ -12,7 +13,10 @@ from .backend.database import SessionLocal, engine, crud, schemas
 from .backend.database.models import Base
 
 
-PROJECT_DIR = os.path.basename(Path(__file__).resolve().parent)
+ROOT_PATH = Path(__file__).resolve().parent
+load_dotenv(os.path.join(ROOT_PATH.parent, '.env'))
+
+PROJECT_DIR = os.path.basename(ROOT_PATH)
 FRONTEND_DIR = os.path.join(PROJECT_DIR, 'frontend')
 
 # Create DB tables
@@ -74,4 +78,6 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 def start() -> None:
     """Start the server."""
-    uvicorn.run(f"{PROJECT_DIR}.main:app", host="0.0.0.0", port=8080, reload=True)
+    reload_check = True if os.getenv('ENV_TYPE') == 'dev' else False
+
+    uvicorn.run(f"{PROJECT_DIR}.main:app", host=os.getenv('HOST'), port=int(os.getenv('PORT')), reload=reload_check)
