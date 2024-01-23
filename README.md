@@ -1,3 +1,5 @@
+This branch is specific to creating Large Language Models (LLMs) so the behaviour is slightly different from the main branch.
+
 # FastAPI Project Quickstart Tool
 
 Welcome to the quickstart tool for creating a `FastAPI` project with the following stack:
@@ -16,6 +18,15 @@ The default pip packages installed include:
 - `jinja2`
 - `python-dotenv`
 - `poetry`
+
+Additional packages installed:
+- `langchain`
+- `llama-index`
+
+Development packages installed:
+- `pytest`
+- `pytest-cov`
+- `hypothesis`
 
 _Note: all libraries and packages are automatically installed to their latest versions when running the tool._
 
@@ -114,10 +125,16 @@ project_name
 └── project_name
 |   └── backend
 |   |   └── database
-|   |       └── __init__.py
-|   |       └── crud.py
-|   |       └── models.py
-|   |       └── schemas.py
+|   |   |   └── __init__.py
+|   |   |   └── crud.py
+|   |   |   └── models.py
+|   |   |   └── schemas.py
+|   |   └── routers
+|   |   |   └── __init__.py
+|   |   └── tests
+|   |   |   └── __init__.py
+|   |   └── utils
+|   |   |   └── __init__.py
 |   └── frontend
 |   |   └── public
 |   |   |   └── css

@@ -39,4 +39,3 @@ class CleanupController(ControllerBase):
         os.remove(os.path.join(self.project_paths.ROOT, '__init__.py'))
         os.remove(os.path.join(self.project_paths.ROOT, 'package.json'))
         os.remove(os.path.join(self.project_paths.ROOT, 'package-lock.json'))
-

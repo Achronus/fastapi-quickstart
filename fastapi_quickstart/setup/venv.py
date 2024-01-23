@@ -6,7 +6,7 @@ from ..conf.constants import VENV, VENV_NAME, CORE_PIP_PACKAGES
 from ..conf.constants.filepaths import get_project_name
 from ..conf.constants.poetry import PoetryContent
 from ..conf.file_handler import insert_into_file
-from ..config import ADDITIONAL_PIP_PACKAGES
+from ..config import ADDITIONAL_PIP_PACKAGES, DEV_PACKAGES
 from .base import ControllerBase
 
 
@@ -62,6 +62,8 @@ class VEnvController(ControllerBase):
         subprocess.run(["poetry", "shell"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         subprocess.run(["poetry", "add", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        subprocess.run(["poetry", "add", *DEV_PACKAGES, '--dev'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Move into project directory
         os.chdir(self.project_paths.PROJECT)
