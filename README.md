@@ -103,6 +103,17 @@ watch
 Then access the site at [localhost:8080](http://localhost:8080).
 
 
+### Production
+
+When configuring for production, remember to update the `ENV_TYPE` variable in `project_name/.env` from `dev` -> `prod`!
+
+You can then use the same docker-compose command to run the production server in the environment of your choice.
+
+```bash
+docker-compose up -d --build
+```
+
+
 ## Folder Structure
 
 The newly created project should look similar to the following:
