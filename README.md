@@ -92,7 +92,7 @@ Not got Docker? Follow these instructions from the [Docker website](https://docs
 
 ```bash
 cd ../my_project  # Replace me with custom name!
-docker-compose up -d --build dev
+docker-compose up -d --build
 
 poetry shell
 poetry install
@@ -101,16 +101,6 @@ watch
 ```
 
 Then access the site at [localhost:8080](http://localhost:8080).
-
-
-### Production
-
-Docker also comes configured with a production variant. Inside the `my_project` folder run:
-```bash
-docker-compose up -d --build prod
-```
-
-Then you are good to go!
 
 
 ## Folder Structure
@@ -135,6 +125,7 @@ project_name
 |   |   |   └── __init__.py
 |   |   └── utils
 |   |   |   └── __init__.py
+|   |   └── .env
 |   └── frontend
 |   |   └── public
 |   |   |   └── css
@@ -153,17 +144,14 @@ project_name
 |   |       |   └── navbar.html
 |   |       └── _base.html
 |   |       └── index.html
-|   └── tests
-|   |   └── __init__.py
-|   └── .env
-|   └── .gitignore
 |   └── build.py
 |   └── main.py
 |   └── tailwind.config.js
 |   └── tailwindcss OR tailwindcss.exe
 └── .dockerignore
+└── .env
+└── .gitignore
 └── database.db
-└── docker-compose.base.yml
 └── docker-compose.yml
 └── poetry.lock
 └── pyproject.toml
