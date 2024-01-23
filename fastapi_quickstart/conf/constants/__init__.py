@@ -20,8 +20,7 @@ CORE_PIP_PACKAGES = [
     "uvicorn[standard]", 
     "sqlalchemy",
     "jinja2", 
-    "python-dotenv",
-    "poetry"
+    "python-dotenv"
 ]
 
 # Define core .env file parameters

@@ -3,7 +3,7 @@ import shutil
 
 from ..conf.constants import STATIC_DIR_NAME, VALID_STATIC_DIR_NAMES, CORE_ENV_PARAMS
 from ..conf.constants.docker import DockerContent
-from ..conf.constants.filepaths import AssetFilenames, SetupDirPaths, SetupAssetsDirNames
+from ..conf.constants.filepaths import AssetFilenames, SetupDirPaths, SetupAssetsDirNames, ProjectPaths
 from ..config import ENV_FILE_ADDITIONAL_PARAMS
 from .base import ControllerBase
 
@@ -12,22 +12,24 @@ class StaticAssetsController(ControllerBase):
     """A controller for handling the static assets."""
     def __init__(self) -> None:
         tasks = [
-            (self.create_dotenv, "Building [magenta].env[/magenta]"),
-            (self.move_setup_assets, "Creating [green]static files[/green] and [green]templates[/green]")
+            (self.move_setup_assets, "Creating [green]static files[/green] and [green]templates[/green]"),
+            (self.create_dotenv, "Building [magenta].env[/magenta]")
         ]
 
         super().__init__(tasks)
 
-    @staticmethod
-    def create_dotenv() -> None:
-        """Creates a `.env` file and adds items to it."""
-        docker_content = DockerContent()
-        path = os.path.join(os.path.dirname(os.getcwd()), AssetFilenames.ENV)
+        self.project_paths = ProjectPaths()
 
-        with open(path, "w") as file:
+    def create_dotenv(self) -> None:
+        """Creates a `.env` file in the root for docker specific config and another in the backend folder. Adds items to them both."""
+        docker_content = DockerContent()
+        docker_path = os.path.join(os.path.dirname(os.getcwd()), AssetFilenames.ENV)
+        backend_path = os.path.join(self.project_paths.BACKEND, AssetFilenames.ENV)
+
+        with open(docker_path, "w") as file:
             file.write(docker_content.env_config())
 
-        with open(path, "a") as file:
+        with open(backend_path, "w") as file:
             for item in CORE_ENV_PARAMS + ENV_FILE_ADDITIONAL_PARAMS:
                 file.write(item)
 
@@ -58,3 +60,9 @@ class StaticAssetsController(ControllerBase):
             ]
             for item in static_dirs:
                 os.mkdir(item)
+
+        # Move .gitignore, if available
+        gitignore_path = os.path.join(os.getcwd(), '.gitignore')
+        if gitignore_path:
+            shutil.copy(gitignore_path, os.path.dirname(os.getcwd()))
+            os.remove(gitignore_path)

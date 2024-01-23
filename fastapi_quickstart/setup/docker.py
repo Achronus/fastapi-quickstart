@@ -31,6 +31,6 @@ class DockerFileController(ControllerBase):
 
     def create_compose_files(self) -> None:
         """Creates the required docker-compose files in the root directory."""
-        open(self.paths.IGNORE, 'w')
+        open(self.paths.IGNORE, 'w+')
 
         self.__create_files(self.mapper.compose_files())

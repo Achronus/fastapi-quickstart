@@ -16,7 +16,8 @@ class DockerEnvConfig:
         self.port = self.ports.split(':')[-1]
         self.host = "0.0.0.0"
 
-        self.python_version = '3.12.1'
+        self.python_version = '3.12'
+        self.version_extension = '.1'
 
 
 class DockerContent:
@@ -31,6 +32,13 @@ class DockerContent:
     def env_config(self) -> str:
         return self.__format(f"""
         #--------------------------
+        # ENVIRONMENT SETTINGS
+        #--------------------------
+        # !IMPORTANT! CHANGE TO 'prod' WHEN IN PRODUCTION
+        # Options: 'dev' or 'prod'
+        ENV_TYPE=dev
+        
+        #--------------------------
         # DOCKER CONFIG SETTINGS
         # -------------------------
         # Docker config
@@ -41,74 +49,74 @@ class DockerContent:
         # Uvicorn
         PORT={self.dotenv_config.port}
         HOST={self.dotenv_config.host}
-
-        #--------------------------
-        # CUSTOM CONFIG SETTINGS
-        #--------------------------
         """)
     
     def backend_df(self) -> str:
         """The content for the backend Dockerfile."""
         start = f"""
         # Dockerfile for FastAPI
-        FROM python:{self.dotenv_config.python_version}-slim
+        ARG PYTHON_VERSION={self.dotenv_config.python_version}
+        ARG BUILD_VERSION=${{PYTHON_VERSION}}{self.dotenv_config.version_extension}
         """
 
         return self.__format(start + """
+
+        # --- Build Stage ---
+        FROM python:${BUILD_VERSION}-slim as builder
+
         ARG ENV_TYPE
         ARG POETRY_VERSION
         ARG PROJECT_NAME
-        ARG PORT
 
+        # Set environment variables
         ENV YOUR_ENV=${ENV_TYPE} \\
-        \tPYTHONFAULTHANDLER=1 \\
-        \tPYTHONUNBUFFERED=1 \\
-        \tPYTHONHASHSEED=random \\
-        \tPIP_NO_CACHE_DIR=off \\
-        \tPIP_DISABLE_PIP_VERSION_CHECK=on \\
-        \tPIP_DEFAULT_TIMEOUT=100
+            PYTHONFAULTHANDLER=1 \\
+            PYTHONUNBUFFERED=1 \\
+            PYTHONHASHSEED=random \\
+            PIP_NO_CACHE_DIR=off \\
+            PIP_DISABLE_PIP_VERSION_CHECK=on \\
+            PIP_DEFAULT_TIMEOUT=100
 
-        # System deps:
-        RUN pip install "poetry==${POETRY_VERSION}"
+        # Install system dependencies
+        RUN apt-get update && \\
+            apt-get install -y gcc libffi-dev libssl-dev curl && \\
+            pip install --upgrade pip "poetry==${POETRY_VERSION}" && \\
+          rm -rf /var/lib/apt/lists/*
 
-        # Copy only requirements to cache them in docker layer
+        # Set working directory
         WORKDIR /${PROJECT_NAME}
 
-        COPY poetry.lock pyproject.toml /${PROJECT_NAME}/
+        # Copy project files (including poetry.lock and pyproject.toml)
+        COPY ./poetry.lock* ./pyproject.toml /${PROJECT_NAME}/
 
-        # Project initialization:
-        RUN poetry config virtualenvs.create false \\
-        \t&& poetry install $(test "$YOUR_ENV" == prod && echo "--no-dev") --no-interaction --no-ansi
+        # Create requirements.txt
+        RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
-        # Creating folders, and files for a project:
-        COPY . /${PROJECT_NAME}
+        # Install packages and perform clean-up
+        RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+
+        # --- Production Stage ---
+        FROM python:${BUILD_VERSION}-alpine as runner
+
+        ARG PROJECT_NAME
+        ARG PORT
+        ARG PYTHON_VERSION
+
+        ENV PYTHON_PACKAGE_VERSION=/usr/local/lib/python${PYTHON_VERSION}/site-packages
+
+        # Set the working directory
+        WORKDIR /${PROJECT_NAME}
+
+        # Copy app files
+        COPY --from=builder /${PROJECT_NAME} /${PROJECT_NAME}
+        COPY --from=builder ${PYTHON_PACKAGE_VERSION} ${PYTHON_PACKAGE_VERSION}
 
         # Expose the port for FastAPI
         EXPOSE ${PORT}
 
-        # Command to run the FastAPI application
-        RUN poetry install
-        CMD ["run"]
-        """)
-
-    def compose_base(self) -> str:
-        """The content for the Docker Compose base file."""
-        return self.__format("""
-        services:
-          base:
-            build:
-              context: .
-              dockerfile: ./config/docker/Dockerfile.backend
-              args:
-                POETRY_VERSION: ${POETRY_VERSION}
-                PROJECT_NAME: ${PROJECT_NAME}
-                PORT: ${PORT}
-            ports:
-            - "${PORTS}"
-            volumes:
-            - .:/${PROJECT_NAME}
-            env_file:
-            - .env
+        # Run FastAPI server (uses docker-compose.yml)
+        CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
         """)
 
     def compose_main(self) -> str:
@@ -117,25 +125,22 @@ class DockerContent:
         version: '1'
 
         services:
-          dev:
-            container_name: backend
-            extends:
-              file: docker-compose.base.yml
-              service: base
+          backend:
             build:
+              context: .
+              dockerfile: ./config/docker/Dockerfile.backend
               args:
-                ENV_TYPE: dev
-            command: uvicorn ${PROJECT_NAME}.main:app --host ${HOST} --port ${PORT} --reload
-
-          prod:
-            container_name: backend
-            extends:
-              file: docker-compose.base.yml
-              service: base
-            build:
-              args:
-                ENV_TYPE: prod
-            command: uvicorn ${PROJECT_NAME}.main:app --host ${HOST} --port ${PORT}
+                POETRY_VERSION: ${POETRY_VERSION}
+                PROJECT_NAME: ${PROJECT_NAME}
+                ENV_TYPE: ${ENV_TYPE}
+                PORT: ${PORT}
+            ports:
+            - "${PORTS}"
+            volumes:
+            - .:/${PROJECT_NAME}
+            env_file:
+            - .env
+            command: python -m uvicorn ${PROJECT_NAME}.main:app --host ${HOST} --port ${PORT} --reload
         """)
 
 
@@ -153,6 +158,5 @@ class DockerFileMapper:
     def compose_files(self) -> list[tuple[str, str]]:
         """Maps the pairs of filepaths and content for Docker compose files."""
         return [
-            (self.paths.COMPOSE_BASE, self.content.compose_base()),
             (self.paths.COMPOSE_MAIN, self.content.compose_main())
         ]
