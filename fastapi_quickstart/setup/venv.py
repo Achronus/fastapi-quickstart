@@ -38,7 +38,7 @@ class VEnvController(ControllerBase):
     @staticmethod
     def install() -> None:
         """Installs a set of `PIP` packages."""
-        subprocess.run([os.path.join(VENV, "pip"), "install", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run([os.path.join(VENV, "pip"), "install", "poetry", *CORE_PIP_PACKAGES, *ADDITIONAL_PIP_PACKAGES], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def init_project(self) -> None:
         """Creates a poetry project."""
