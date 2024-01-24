@@ -23,7 +23,11 @@ class PoetryContent:
         self.commands = PoetryCommands()
 
         self.SCRIPT_INSERT_LOC = 'readme = "README.md"'
-        self.SCRIPT_CONTENT = '\n'.join([
+        self.SCRIPT_CONTENT = ''.join([
+            "exclude = [",
+            f'\t"{self.project_name}/tailwind.config.js"',
+            f'\t"{self.project_name}/tailwindcss.exe"',
+            "]\n\n",
             "[tool.poetry.scripts]",
             f'run = "{self.commands.START_SERVER_CMD}"',
             f'watch = "{self.commands.WATCH_POETRY_CMD}"'

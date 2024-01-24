@@ -61,62 +61,69 @@ class DockerContent:
 
         return self.__format(start + """
 
-        # --- Build Stage ---
-        FROM python:${BUILD_VERSION}-slim as builder
+        ########################################
+        # --- Base Stage ---
+        ########################################
+        FROM python:${BUILD_VERSION}-slim as base
 
-        ARG ENV_TYPE
-        ARG POETRY_VERSION
         ARG PROJECT_NAME
+        ENV PROJECT_NAME=${PROJECT_NAME}
+
+        # install system dependencies
+        RUN apt-get update && \\
+            apt-get install -y gcc && \\
+            rm -rf /var/lib/apt/lists/*
+
+        # Set working directory
+        WORKDIR /$PROJECT_NAME
+
+        ########################################
+        # --- Development Stage ---
+        ########################################
+        FROM base as development
+
+        ARG POETRY_VERSION
 
         # Set environment variables
-        ENV YOUR_ENV=${ENV_TYPE} \\
-            PYTHONFAULTHANDLER=1 \\
+        ENV PYTHONFAULTHANDLER=1 \\
             PYTHONUNBUFFERED=1 \\
             PYTHONHASHSEED=random \\
             PIP_NO_CACHE_DIR=off \\
             PIP_DISABLE_PIP_VERSION_CHECK=on \\
-            PIP_DEFAULT_TIMEOUT=100
+            PIP_DEFAULT_TIMEOUT=100 \\
+            POETRY_VIRTUALENVS_CREATE=false \\
+            POETRY_NO_INTERACTION=1 \\
+            POETRY_VERSION=${POETRY_VERSION}
 
-        # Install system dependencies
-        RUN apt-get update && \\
-            apt-get install -y gcc libffi-dev libssl-dev curl && \\
-            pip install --upgrade pip "poetry==${POETRY_VERSION}" && \\
-          rm -rf /var/lib/apt/lists/*
+        # Install poetry
+        RUN pip install --upgrade pip "poetry==$POETRY_VERSION"
 
-        # Set working directory
-        WORKDIR /${PROJECT_NAME}
+        # Copy requirements and install dependencies
+        COPY poetry.lock pyproject.toml ./
+        RUN poetry install --no-dev --no-root
 
-        # Copy project files (including poetry.lock and pyproject.toml)
-        COPY ./poetry.lock* ./pyproject.toml /${PROJECT_NAME}/
+        ########################################
+        # --- Builder Stage ---
+        ########################################
+        FROM development as builder
 
-        # Create requirements.txt
-        RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
+        # Copy project files
+        COPY . .
 
-        # Install packages and perform clean-up
-        RUN pip install --no-cache-dir --upgrade -r requirements.txt
+        # Install and build poetry
+        RUN poetry build --format wheel
 
-
+        ########################################
         # --- Production Stage ---
-        FROM python:${BUILD_VERSION}-alpine as runner
+        ########################################
+        FROM base as production
 
-        ARG PROJECT_NAME
-        ARG PORT
-        ARG PYTHON_VERSION
+        # Copy the built wheel file from the builder stage
+        COPY --from=builder /$PROJECT_NAME/dist/*.whl ./
 
-        ENV PYTHON_PACKAGE_VERSION=/usr/local/lib/python${PYTHON_VERSION}/site-packages
-
-        # Set the working directory
-        WORKDIR /${PROJECT_NAME}
-
-        # Copy app files
-        COPY --from=builder /${PROJECT_NAME} /${PROJECT_NAME}
-        COPY --from=builder ${PYTHON_PACKAGE_VERSION} ${PYTHON_PACKAGE_VERSION}
-
-        # Expose the port for FastAPI
-        EXPOSE ${PORT}
-
-        # Run FastAPI server (uses docker-compose.yml)
-        CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+        # Install the wheel and then remove it
+        RUN pip install ./*.whl && \\
+            rm ./*.whl
         """)
 
     def compose_main(self) -> str:
@@ -125,22 +132,22 @@ class DockerContent:
         version: '1'
 
         services:
-          backend:
+        backend:
+            container_name: backend
             build:
-              context: .
-              dockerfile: ./config/docker/Dockerfile.backend
-              args:
+            context: .
+            dockerfile: ./config/docker/Dockerfile.backend
+            args:
                 POETRY_VERSION: ${POETRY_VERSION}
                 PROJECT_NAME: ${PROJECT_NAME}
-                ENV_TYPE: ${ENV_TYPE}
-                PORT: ${PORT}
             ports:
             - "${PORTS}"
             volumes:
             - .:/${PROJECT_NAME}
             env_file:
             - .env
-            command: python -m uvicorn ${PROJECT_NAME}.main:app --host ${HOST} --port ${PORT} --reload
+            # entrypoint: ['sleep', 'infinity']
+            entrypoint: ["run"]
         """)
 
 
