@@ -62,9 +62,10 @@ All files added to the project are stored in `setup_assets`. If you want add fil
 - Static files **MUST** be stored in a `setup_assets/frontend/static` folder
 - The static folder name is changed dynamically during project creation from `frontend/static` -> `frontend/public`
 
-For configuration customisation go to `config.py` in the root directory. Here you have three options:
+For configuration customisation go to `config.py` in the root directory. Here you have four options:
 - Changing the database URL -> `DATABASE_URL`, defaults to a SQLite local database.
 - Adding additional PIP packages to the project -> `ADDITIONAL_PIP_PACKAGES`
+- Adding development packages to the project -> `DEV_PACKAGES`
 - Adding additional `.env` file variables -> `ENV_FILE_ADDITIONAL_PARAMS`
 
 Note: the last two options are treated as python `list` objects that accept `strings` only.
@@ -132,11 +133,16 @@ project_name
 |   |   |   └── schemas.py
 |   |   └── routers
 |   |   |   └── __init__.py
+|   |   |   └── items.py
+|   |   |   └── users.py
 |   |   └── tests
 |   |   |   └── __init__.py
 |   |   └── utils
 |   |   |   └── __init__.py
+|   |   └── __init__.py
 |   |   └── .env
+|   |   └── dependencies.py
+|   |   └── main.py
 |   └── frontend
 |   |   └── public
 |   |   |   └── css
@@ -156,7 +162,6 @@ project_name
 |   |       └── _base.html
 |   |       └── index.html
 |   └── build.py
-|   └── main.py
 |   └── tailwind.config.js
 |   └── tailwindcss OR tailwindcss.exe
 └── .dockerignore
